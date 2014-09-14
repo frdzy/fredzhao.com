@@ -9,7 +9,7 @@ permalink:        pretty
 title:            fredzhao.com
 url:              http://fredzhao.com
 paginate:         1
-baseurl:          /
+baseurl:          /fredzhao.com
 author:
   name:           Fred Zhao
   url:            https://twitter.com/frdzy
