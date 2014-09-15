@@ -26,7 +26,24 @@ $ sed -i -e 's:baseurl }}\([^{/]\):baseurl }}/\1:' \
   $(git grep "baseurl }}[^{/]" | cut -d: -f1 | uniq)
 ```
 
-to manually patched up all the occurrences that didn't match up with the documentation.
+to manually patch up all the occurrences that didn't match up with the documentation.
+
+As a caveat, I had to use two different configurations for `_config.yml` depending on if I wanted the github.io page or my actual personal domain to display correctly -- I guess it's impossible to support both!
+
+To demonstrate the changes I made in patch form (first displayed correctly on github.io, then on my own domain):
+
+```
+# username.github.io/projectname
+# (frdzy.github.io/fredzhao.com)
+-baseurl:  /
++baseurl:  /projectname
+
+# mydomain.com
+# (fredzhao.com)
+-baseurl:  /projectname
+```
+
+### Testing everything
 
 As a sanity check, I made sure these all worked (including serving up the page with the correct CSS):
 
