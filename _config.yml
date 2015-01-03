@@ -6,7 +6,8 @@ pygments:         true
 permalink:        pretty
 
 # Setup
-title:            fredzhao.com
+title:            Fred Zhao
+tagline:          Learn Like a Machine, Build Like an Engineer, Invent Like a Child
 url:              http://fredzhao.com
 paginate:         1
 author:
