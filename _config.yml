@@ -1,6 +1,6 @@
 # Dependencies
-markdown:         redcarpet
-pygments:         true
+markdown:         kramdown
+highlighter:      pygments
 
 # Permalinks
 permalink:        pretty
@@ -9,7 +9,7 @@ permalink:        pretty
 title:            Fred Zhao
 tagline:          Learn, Invent, Build, Learn
 url:              http://fredzhao.com
-paginate:         1
+paginate:         2
 author:
   name:           Fred Zhao
   url:            https://twitter.com/frdzy
@@ -18,3 +18,6 @@ author:
 version:          1.0.0
 github:
   repo:           https://github.com/frdzy/fredzhao.com
+
+# Posts
+excerpt_separator: "<!-- more -->"
