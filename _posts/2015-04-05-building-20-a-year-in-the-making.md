@@ -5,6 +5,7 @@ customjs:
  - build/react-with-addons-0.13.1.js
  - build/photo_data.js
  - build/building20.js
+thumbnail: /public/images/10203517579964389.jpg
 ---
 
 In the months leading up to the construction of the Facebook campus's new
