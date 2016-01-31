@@ -11,7 +11,7 @@ thumbnail: /public/images/10203517579964389.jpg
 In the months leading up to the construction of the Facebook campus's new
 Building 20, I was pursuing a project of my own: run 500 miles in 2014.
 After I finished each run in front of Building 19 -- the company gym -- I
-also took a photo of Building 20 emerging from its scaffolding for across the 
+also took a photo of Building 20 emerging from its scaffolding across the
 highway.
 
 <div id="read-more" />
