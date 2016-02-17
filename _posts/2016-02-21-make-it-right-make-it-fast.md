@@ -1,0 +1,127 @@
+---
+layout: post
+title: Make It Right, Make It Fast
+---
+
+It's time to make the Project pages a lot more robust.
+
+Here's the rough tradeoff I had made in not starting with a more
+well-engineered solution originally:
+
+* (+) Since I haven't done much frontend development, being lazy means I don't
+  have to learn anything new beyond what I'm already familiar with
+* (-) In each blog/page, I have to manually reference filepaths to load libraries
+* (-) In those pages, I also have to manually track those dependencies and ensure
+  they're up to date
+* (-) Those libraries would also have to be loaded into the global namespace
+
+<div id="read-more" />
+
+Today I'll fix those minus signs! But first, a quick word on why this didn't
+make sense to do earlier.
+
+<!-- more -->
+
+<blockquote>
+Make it work -> Make it right -> Make it fast
+</blockquote>
+
+I recently heard a wise saying at work -- **"make it work, make it right, make
+it fast"** -- as a 3-step process to take a difficult project and make it easy.
+It's important to follow it in that specific ordering, for two reasons.
+
+The first reason is pragmatic: the functionality of a program drives everything
+else. The program's correctness and speed still matter, but they're irrelevant
+if the functionality doesn't even exist yet.
+
+The bigger reason is psychological: it's a lot more fun to realize an idea as
+quickly as possible, even if that means it starts off looking super rough. It's
+not that fleshing out its details is necessarily less fun, but those things
+often tend to get way more involved. Breaking up a huge idea into small steps of
+ideas makes the whole thing feel a lot more tenable.
+
+In this vein, the sole "(+)" in my tradeoff list above was crucial in its own
+right. I didn't really know what exactly I needed until I built on the prototype
+(answer: React on a static page); and it was very liberating to give myself
+permission to hack up something that works without worrying about expanding the
+scope and introducing more changes that, while they would be nice to have, were
+simply distractions at the time.
+
+But now the time has come to follow up on the next two steps! :)
+
+* Make it work: Continue to render pages with React as I did for the first 
+  project
+* Make it right: I should be able to `require()` modules
+* Make it fast: I should be able to run a command line script to build and 
+  bundle files for web, and reuse the same common files
+
+## The solution
+
+The solution I settled on is Webpack. It handles everything I want above and
+also makes room for future possibilities, like [React Hot Loader](
+https://github.com/gaearon/react-hot-loader).
+
+Here are the steps I took:
+
+1. Read a bunch of articles (see [References](#references) section at the end of
+   this article)
+2. Decide on a good-enough folder structure (`src -> build`)
+3. Convert the existing source files to use `require()`
+4. Follow the tutorial steps until I can run `webpack` without errors
+5. Finally, convert references to point to the new folder structure
+
+Step 4. took the longest time, which is to be expected since I've never worked
+with Webpack before. One error in particular took a bit of time to hunt down:
+
+```
+ReferenceError: [BABEL] ... Unknown option: direct.presets
+```
+
+In my case, it turned out that my `package.json` referenced preset libraries
+that were too old, and **their** version of `babel` didn't support the `presets`
+attribute. Updating `package.json` to use a later version fixed that up.
+
+## Looking forward
+
+Long term, I also want to be able to systematically track the progress of my
+projects over time. This means, for each project, I should be able to:
+
+* Make it work better:
+    * Add blog post with a snapshot of the code, taken when the blog post is written
+* Make it more right:
+    * Maintain a Project page for the code, but as an updating repository
+* Make it faster:
+    * I should only need a single command to both launch the Jekyll server and
+      rerun webpack to rebuild files as they change
+
+## References
+
+Research steps:
+
+First I tried to pick between Browserify and Webpack. My conclusion was that
+this decision was pretty arbitrary -- most of the arguments cover topics I 
+simply haven't experienced firsthand -- so I picked the one that supports
+React Hot Loader for future Option Value.
+
+* From Google search of `browserify vs. webpack`:
+    * [Summary of philosophies by Naman Goel](http://blog.namangoel.com/browserify-vs-webpack-js-drama)
+    * [Summary with more opinion for Webpack by Cory House](https://medium.com/@housecor/browserify-vs-webpack-b3d7ca08a0a9)
+        * ... which led to [webpack-howto by Pete Hunt](https://github.com/petehunt/webpack-howto)
+    * [Reddit discussion](https://www.reddit.com/r/reactjs/comments/30at04/webpack_vs_browserify_whats_best_for_react/)
+    * [Webpack and React](http://survivejs.com/webpack_react/webpack_and_react/):
+      Specific tutorial for my exact needs
+    * [react-starter](https://github.com/webpack/react-starter): For future
+      reference, after I've explored the options in more detail
+
+From here, I looked up a few more articles to suit my specific needs of (1)
+supporting a static site and (2) creating multiple chunks for multiple pages.
+From these readings, I realized that the second consideration may also change
+in the future if/when I convert this blog into a single page app, but I'm
+satisfied with the results for now.
+
+* From Google search of `react webpack static site`:
+    * [Creating Static, Isomorphic Websites with React and Webpack](http://www.qimingweng.com/writing/webpack-static-render)
+    * [React Static Site](http://braddenver.com/blog/2015/react-static-site.html)
+* From Google search of `webpack multi page app`:
+    * [Webpack Optimizations](https://webpack.github.io/docs/optimization.html):
+      official docs turned up from a Google search of `webpack multi page app`.
