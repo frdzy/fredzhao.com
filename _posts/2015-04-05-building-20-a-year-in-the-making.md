@@ -2,9 +2,9 @@
 layout: post
 title: Building 20&#58; A Year in the Making
 customjs:
- - build/react-with-addons-0.13.1.js
- - build/photo_data.js
- - build/building20.js
+ - build/prewebpack/react-with-addons-0.13.1.js
+ - build/prewebpack/photo_data.js
+ - build/prewebpack/building20.js
 thumbnail: /public/images/10203517579964389.jpg
 ---
 
