@@ -48,14 +48,17 @@
 
 	var React = __webpack_require__(1);
 
-	var photoData = __webpack_require__(157);
+	var ImageLoader = __webpack_require__(157);
+
+	var photoData = __webpack_require__(159);
 
 	var Canvas = React.createClass({
 	  displayName: 'Canvas',
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      currentPhotoIndex: 0
+	      currentPhotoIndex: 0,
+	      artificialLatency: 0
 	    };
 	  },
 
@@ -73,9 +76,13 @@
 	  _renderImage: function _renderImage(photo) {
 	    var src = photo.path;
 	    var captions = [];
-	    photo.caption.split('\n').forEach(function (line) {
-	      captions.push(line);
-	      captions.push(React.createElement('br', null));
+	    photo.caption.split('\n').forEach(function (line, index) {
+	      captions.push(React.createElement(
+	        'span',
+	        { key: 'span.' + index },
+	        line
+	      ));
+	      captions.push(React.createElement('br', { key: 'br.' + index }));
 	    });
 
 	    var timeLabelStyle = {
@@ -83,6 +90,7 @@
 	      backgroundColor: 'aliceblue',
 	      borderRadius: 2,
 	      opacity: 0.5,
+	      margin: 1,
 	      paddingLeft: 5,
 	      paddingRight: 5
 	    };
@@ -100,13 +108,23 @@
 	        this.props.photoData.length,
 	        ')'
 	      ),
-	      React.createElement('img', { src: src, onClick: this._advanceImage }),
+	      React.createElement(ImageLoader, {
+	        src: src,
+	        onClick: this._advanceImage,
+	        artificialLatency: this.state.artificialLatency
+	      }),
 	      React.createElement(
 	        'blockquote',
 	        null,
 	        captions
 	      )
 	    );
+	  },
+
+	  onLatencyChange: function onLatencyChange(evt) {
+	    this.setState({
+	      artificialLatency: +evt.target.value
+	    });
 	  },
 
 	  render: function render() {
@@ -20525,6 +20543,253 @@
 
 /***/ },
 /* 157 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var React = __webpack_require__(1);
+	var classNames = __webpack_require__(158);
+
+	var LoadState = {
+	  EMPTY: 0,
+	  SOURCE_CHANGED: 1,
+	  LOADING: 2,
+	  LOADED_FAST_DONE: 3,
+	  LOADED_SLOW_TRANSITIONING: 4,
+	  LOADED_SLOW_DONE: 5
+	};
+
+	var ImageLoader = React.createClass({
+	  displayName: 'ImageLoader',
+
+	  propTypes: {
+	    src: React.PropTypes.string.isRequired,
+	    artificialLatency: React.PropTypes.number
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      loadState: LoadState.EMPTY,
+	      isTesting: false,
+	      loadedSources: {}
+	    };
+	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (this.props.src === nextProps.src) {
+	      return;
+	    }
+
+	    if (this.state.loadedSources[nextProps.src]) {
+	      this.setState({
+	        loadState: LoadState.LOADED_FAST_DONE
+	      });
+	      return;
+	    }
+	    this.createLoader();
+	    this.setState({
+	      loadState: LoadState.SOURCE_CHANGED
+	    });
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    this.createLoader();
+	  },
+
+	  createLoader: function createLoader() {
+	    this.imageLoader = new Image();
+	    this.imageLoader.onload = this.onLoad;
+	    this.imageLoader.onerror = this.onError;
+	    this.imageLoadStart = Date.now();
+
+	    if (this.props.artificialLatency) {
+	      setTimeout(this.load, this.props.artificialLatency);
+	    } else {
+	      this.load();
+	    }
+	  },
+
+	  load: function load() {
+	    this.imageLoader.src = this.props.src;
+	    this.setState({
+	      loadState: LoadState.LOADING
+	    });
+	  },
+
+	  componentDidUnmount: function componentDidUnmount() {
+	    this.imageLoader = null;
+	  },
+
+	  onLoad: function onLoad() {
+	    var loadedSource = this.props.src;
+	    var loadedSources = this.state.loadedSources;
+	    loadedSources[loadedSource] = true;
+
+	    this.imageLoader = null;
+	    var imageLoadFinish = Date.now();
+
+	    var loadedFast = imageLoadFinish - this.imageLoadStart < 20;
+	    if (loadedFast) {
+	      this.setState({
+	        loadState: LoadState.LOADED_FAST_DONE,
+	        loadedSources: loadedSources
+	      });
+	    } else {
+	      setTimeout(this.onSlowLoad, 50);
+	      this.setState({
+	        loadState: LoadState.LOADED_SLOW_TRANSITIONING,
+	        loadedSources: loadedSources
+	      });
+	    }
+	  },
+
+	  onSlowLoad: function onSlowLoad() {
+	    this.setState({
+	      loadState: LoadState.LOADED_SLOW_DONE
+	    });
+	  },
+
+	  onError: function onError() {
+	    this.imageLoader = null;
+	  },
+
+	  onClick: function onClick(evt) {
+	    if (evt.shiftKey) {
+	      this.setState({
+	        isTesting: !this.state.isTesting
+	      });
+	      return;
+	    }
+
+	    if (evt.type === 'contextmenu') {
+	      return;
+	    }
+
+	    if (this.props.onClick) {
+	      this.props.onClick(evt);
+	    }
+	  },
+
+	  render: function render() {
+	    var commonStyle = {
+	      boxSizing: 'border-box',
+	      borderWidth: 1,
+	      borderStyle: 'solid',
+	      borderColor: '#bbb'
+	    };
+	    if (this.state.loadState === LoadState.EMPTY || this.state.loadState === LoadState.SOURCE_CHANGED || this.state.loadState === LoadState.LOADING || this.state.isTesting) {
+	      var style = Object.assign({
+	        height: 'auto'
+	      }, commonStyle);
+	      return React.createElement('img', {
+	        onClick: this.onClick,
+	        onContextMenu: this.onClick,
+	        style: style,
+	        src: 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 2048 1536\'%2F%3E', width: '2048', height: '1536'
+	      });
+	    } else if (this.state.loadState === LoadState.LOADED_FAST_DONE) {
+	      return React.createElement('img', _extends({
+	        style: commonStyle
+	      }, this.props, {
+	        src: this.props.src,
+	        onClick: this.onClick,
+	        onContextMenu: this.onClick
+	      }));
+	    } else if (this.state.loadState === LoadState.LOADED_SLOW_TRANSITIONING) {
+	      var classes = classNames({
+	        newlyLoaded: true
+	      });
+	      return React.createElement('img', _extends({
+	        className: classes,
+	        style: commonStyle
+	      }, this.props, {
+	        src: this.props.src,
+	        onClick: this.onClick,
+	        onContextMenu: this.onClick
+	      }));
+	    } else if (this.state.loadState === LoadState.LOADED_SLOW_DONE) {
+	      var classes = classNames({
+	        fadeIn: true
+	      });
+	      return React.createElement('img', _extends({
+	        className: classes,
+	        style: commonStyle
+	      }, this.props, {
+	        src: this.props.src,
+	        onClick: this.onClick,
+	        onContextMenu: this.onClick
+	      }));
+	    } else {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Got unexpected load state: ',
+	        this.state.loadState
+	      );
+	    }
+	  }
+	});
+
+	module.exports = ImageLoader;
+
+/***/ },
+/* 158 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 159 */
 /***/ function(module, exports) {
 
 	module.exports = [
