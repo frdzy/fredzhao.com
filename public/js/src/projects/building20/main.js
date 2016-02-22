@@ -1,11 +1,14 @@
 var React = require('react');
 
+var ImageLoader = require('./ImageLoader');
+
 var photoData = require('./photo_data.json')
 
 var Canvas = React.createClass({
   getInitialState: function() {
     return {
       currentPhotoIndex: 0,
+      artificialLatency: 0,
     };
   },
 
@@ -23,9 +26,11 @@ var Canvas = React.createClass({
   _renderImage: function(photo) {
     var src = photo.path;
     var captions = []
-    photo.caption.split('\n').forEach(function(line) {
-      captions.push(line);
-      captions.push(<br />);
+    photo.caption.split('\n').forEach(function(line, index) {
+      captions.push(
+        <span key={'span.' + index}>{line}</span>
+      );
+      captions.push(<br key={'br.' + index} />);
     });
 
     var timeLabelStyle = {
@@ -33,6 +38,7 @@ var Canvas = React.createClass({
       backgroundColor: 'aliceblue',
       borderRadius: 2,
       opacity: 0.5,
+      margin: 1,
       paddingLeft: 5,
       paddingRight: 5,
     };
@@ -43,12 +49,22 @@ var Canvas = React.createClass({
           {' '}
           ({this.state.currentPhotoIndex + 1} / {this.props.photoData.length})
         </div>
-        <img src={src} onClick={this._advanceImage} />
+        <ImageLoader
+          src={src}
+          onClick={this._advanceImage}
+          artificialLatency={this.state.artificialLatency}
+        />
         <blockquote>
           {captions}
         </blockquote>
       </div>
     );
+  },
+
+  onLatencyChange: function(evt) {
+    this.setState({
+      artificialLatency: +evt.target.value,
+    });
   },
 
   render: function() {
