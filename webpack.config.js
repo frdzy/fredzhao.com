@@ -2,10 +2,6 @@ var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 var jsRoot = '/public/js';
 
-var projects = [
-  'building20',
-];
-
 function getEntries(projectNames) {
   var entries = {};
   projectNames.forEach(function(projectName) {
@@ -17,32 +13,37 @@ function getEntries(projectNames) {
 
 var projectNames = [
   'building20',
+  'allthethreads',
 ];
 
 module.exports = {
   entry: getEntries(projectNames),
   output: {
     path: __dirname + jsRoot + '/build',
-    filename: '[name].js'
+    filename: '[name].js',
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           presets: ['es2015', 'react'],
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.json$/,
-        loader: 'json',
-        exclude: /node_modules/
-      }
+        loader: 'json-loader',
+        exclude: /node_modules/,
+      },
     ],
   },
   plugins: [
-    new CommonsChunkPlugin('core/commons.js', projectNames),
+    new CommonsChunkPlugin({ 
+      filename: 'core/commons.js', 
+      names: projectNames,
+      children: true,
+    }),
   ],
 };
