@@ -13,7 +13,6 @@ function getEntries(projectNames) {
 
 var projectNames = [
   'building20',
-  'allthethreads',
 ];
 
 module.exports = {
