@@ -23,7 +23,7 @@ still needed to install a small piece of software to bring everything together.
 2. Run `$ SwitchAudioSource -a` to see the device names recognized by the tool
 3. Create a series of Automator services (I made one for each device I wanted to switch to) that will run the above as shell commands
 
-![Automator screenshot](../public/images/2020/switch_audio_automator_keyboard_shortcuts.png)
+![Automator screenshot](/public/images/2020/switch_audio_automator_keyboard_shortcuts.png)
 
 The "Run" button helped me test that each of the services works as intended, so I knew I
 was on the right track!
@@ -50,7 +50,7 @@ activation of each service.
 
 In my case, I used Ctrl-Shift-1, Ctrl-Shift-2, and Ctrl-Shift-3 for each script:
 
-![System preferences screenshot](../public/images/2020/switch_audio_system_preference_shortcuts.png)
+![System preferences screenshot](/public/images/2020/switch_audio_system_preference_shortcuts.png)
 
 An alternative is to use a single hotkey to initiate a menu, and use a mouse/numbers to
 select one of the configurations. However, I opted for the faster option without a menu.
@@ -63,7 +63,7 @@ Finally, everything looked like it was ready to go, but the hotkeys don't seem t
 It turned out that I needed to go to `Finder \ Services` and manually click each option first
 before the keyboard shortcuts could activate.
 
-![Finder example](../public/images/2020/switch_audio_finder_services.png)
+![Finder example](/public/images/2020/switch_audio_finder_services.png)
 
 Source: [Keyboard shortcuts not working for services](https://discussions.apple.com/thread/5048120)
 
