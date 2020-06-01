@@ -22,11 +22,18 @@ still needed to install a small piece of software to bring everything together.
 1. Install [switchaudio-x](https://github.com/deweller/switchaudio-osx)
 2. Run `$ SwitchAudioSource -a` to see the device names recognized by the tool
 3. Create a series of Automator services (I made one for each device I wanted to switch to) that will run the above as shell commands
+4. Automator has several modes. We'll use "Quick Action" and change the "Workflow receives" dropdown to `no input`:
+
+![Automator screenshot](/public/images/2020/switch_audio_automator_setup.png)
 
 ![Automator screenshot](/public/images/2020/switch_audio_automator_keyboard_shortcuts.png)
 
 The "Run" button helped me test that each of the services works as intended, so I knew I
 was on the right track!
+
+Note that my `SwitchAudioSource` directory might not be the same as yours. Run
+`$ which SwitchAudioSource` to customize the path as is appropriate for you. In
+my case, it's `/usr/local/bin/SwitchAudioSource`.
 
 ~~~
 " Service 1: 'Audio/ Switch to Laptop'
