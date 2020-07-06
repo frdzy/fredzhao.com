@@ -12,6 +12,7 @@ title: Resume
 ## Highlights
 
 * Expertise in serverside abstractions, from 8 years of maintaining and refactoring legacy codebases
+* Energized by collaboration across teams, to scale software systems organizationally (not just technically)
 * Experienced in Hacklang/PHP, JavaScript, and GraphQL, but happy to learn whatever is needed
 * Basic competency in full-stack development, from internal hackathons and 3 years of internal tools
 * Passion for teaching, honed by mentoring teammates, answering internal forum questions, and volunteering
@@ -20,7 +21,7 @@ title: Resume
 
 ## Relevant Work Experience
 
-❤️ My proudest projects are "Post Data Model Refactor" (based on external and internal impact) and "Internal Notification Management" (based on personal alignment). Exact metrics are omitted, but orders of magnitude are provided.
+❤️ My proudest projects are "Post Data Model Refactor" (based on external and internal impact) and "Internal Notification Management" (based on personal alignment). In the "Result" sections, I omit exact metrics but give general orders of magnitude.
 
 ### Software Engineer, Facebook
 
@@ -47,11 +48,11 @@ title: Resume
   * **Album Improvements** (tech lead, cross-platform team)
     * Expanded photo albums as general tools for story organization, made shared albums available on mobile, built upon prior work on post data model (see next project). Result: shipped.
   * ❤️ **Post Data Model Refactor** (tech lead, multi-year cross-org project)
-    * Refactored the data model for all sitewide content for users; coordinated effort across other teams, both horizontally (pages, ads, groups) and vertically (news feed, timeline, data analytics). Result: pulled off the original goal, paved the way for efficient cross-platform feature development, caused an acceptable number of x outage events.
+    * Refactored the data model for all sitewide content for users; led coding effort, scaled it out through adapter and test infrastructure, and coordinated effort across other teams -- both horizontally (pages, ads, groups) and vertically (news feed, timeline, data analytics). Result: reduced development overhead for features org-wide, caused an acceptable number of x outage events.
   * **Shared Albums** (paired with product engineer)
     * Built data model and some web UIs to ship this feature on web, identified and pre-empted security holes by extrapolating from related product reports. Result: shipped.
   * *Team-wide engineering practices*: 
-    * Ramped up and recruited teammates, established oncall process and documentation. Result: many teammates and most practices all outlived my team tenure.
+    * Ramped up and recruited teammates, established oncall process and documentation. Result: many teammates and most practices have outlived my team tenure.
 
 ### Software Engineer Intern, Facebook
 
