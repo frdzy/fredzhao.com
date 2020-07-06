@@ -21,3 +21,5 @@ github:
 
 # Posts
 excerpt_separator: "<!-- more -->"
+
+plugins:          [jekyll-paginate]

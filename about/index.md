@@ -7,8 +7,8 @@ Hiya ev'rybody! I'm Fred. I like to invent and build stuff. This site is a
 collection of thoughts and learnings from along the way.
 
 * Occupations
-    * Day: Software Engineer
-    * Night & Weekends: Marathoner, Tennis Player
+  * Day: Software Engineer (see [Resume](/about/resume/))
+  * Night & Weekends: Marathoner, Tennis Player
 
 #### Social Media
 
