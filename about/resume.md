@@ -13,7 +13,7 @@ title: Resume
 
 * Expertise in server-side abstractions from 5 years of maintaining legacy codebases
 * Basic competency in full-stack development from 3 years building internal tools
-* Energized by collaboration across teams, to scale software systems organizationally
+* Energized by collaborating across teams and scaling software systems organizationally
 * Passion for teaching others and building up durable repositories of knowledge
 * Experienced in Hacklang/PHP, JavaScript, and GraphQL; happy to learn whatever is needed
 
@@ -28,6 +28,7 @@ title: Resume
 * *General Contributions*
   * Conducted ~300 interviews, with focus on product architecture
   * Participated in quorum for post-interview debrief sessions
+  * Contributed to internal privacy and mutation frameworks
 * Recruiting Products: July 2019 - Current
   * **Current Events**
     * Built data model and ingested current events, coordinated with teammates to surface them to relevant recruiting tools
@@ -40,7 +41,7 @@ title: Resume
     * Built first-class support for project management features in internal task management tool: progress, group by X, sprint planning
 * Photos Infrastructure / Sharing Infrastructure: July 2012 - July 2017
   * ❤️ **Post Data Model Refactor**
-    * Refactored the data model for all sitewide content for users
+    * Refactored the data model for sitewide user content (creations and edits)
     * Led coding effort, scaled it out through adapter and test infrastructure
     * Coordinated effort across other teams -- both horizontally (pages, ads, groups) and vertically (news feed, timeline, data analytics)
     * Result: reduced development overhead for features org-wide
