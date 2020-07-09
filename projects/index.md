@@ -3,8 +3,5 @@ layout: page
 title: Projects
 ---
 
-* [Building 20: A Year In The Making](/projects/building20/)
+* [Building 20: A Year In The Making]({% post_url 2015-04-05-building-20-a-year-in-the-making %})
     * Description: Time lapse of construction work on Facebook Building 20
-    * Last updated: 2016.01.31
-    * Historical snapshots:
-        2. [2015.04.05]({% post_url 2015-04-05-building-20-a-year-in-the-making %})
