@@ -23,39 +23,39 @@ title: Resume
 
 *Proudest projects highlighted with ❤️  emoji below.*
 
-`Software Engineer, Facebook: Menlo Park, California (July 2012 - Present)`
+### Software Engineer, Facebook: Menlo Park, California (July 2012 - Present)
 
-* *General Contributions*
+* **General Contributions**
   * Conducted ~300 interviews, with focus on product architecture
   * Participated in quorum for post-interview debrief sessions
   * Contributed to internal privacy, validation, and mutation frameworks
-* Recruiting Products: July 2019 - Current
-  * **Current Events**
+* **Recruiting Products**: July 2019 - Current
+  * Current Events
     * Built data model and ingested current events, coordinated with teammates to surface them to relevant recruiting tools
-    * Result: xx incremental net hires of relevant candidates
-* Productivity Tools: August 2017 - July 2019
-  * ❤️  **Internal Notification Management**
+    * *Result*: xx incremental net hires of relevant candidates
+* **Productivity Tools**: August 2017 - July 2019
+  * ❤️ Internal Notification Management
     * Built "Inbox Zero" features, launched suggested settings to proactively reduce notification noise
-    * Result: positive employee feedback, xx% reduction of notification noise, xx% action rate on suggestions
-  * **Tasks**
+    * *Result*: positive employee feedback, xx% reduction of notification noise, xx% action rate on suggestions
+  * Tasks
     * Built first-class support for project management features in internal task management tool: progress, group by X, sprint planning
-    * Integrated those features into internal "if-this-then-that" engine
-* Photos Infrastructure / Sharing Infrastructure: July 2012 - July 2017
-  * ❤️  **Post Data Model Refactor**
+    * Integrated those features into internal "if-this-then-that" automation engine
+* **Photos Infrastructure / Sharing Infrastructure**: July 2012 - July 2017
+  * ❤️ Post Data Model Refactor
     * Refactored the data models used across sitewide user content to a unified model
     * Led coding effort in team of 2-6 engineers
     * Built adapter interfaces, test infrastructure, and a friendly service culture
     * Coordinated effort across many more engineers in related teams, both horizontal (pages, ads, groups) and vertical (news feed, timeline, data analytics)
-    * Result: enabled full attachment editing (text, photo, video, link, multimedia) across all platforms (web, native apps, m-site)
-    * Result: simplified complexity matrix for developing new content features
-  * **Albums and Shared Albums**
+    * *Result*: enabled full attachment editing (text, photo, video, link, multimedia) across all platforms (web, native apps, m-site)
+    * *Result*: simplified complexity matrix for developing new content features
+  * Albums and Shared Albums
     * Ported album uploader from flash to html5
     * Shipped shared albums on web after initial hackathon
     * Led cross-platform effort to extend to native apps
     * Expanded data model to multimedia and non-media content types
-  * *Team-wide engineering practices*
+  * Team-wide engineering practices
     * Ramped up and recruited teammates, established oncall process, organized documentation
-    * Result: many teammates and most practices have outlived my team tenure
+    * *Result*: many teammates and most practices have outlived my team tenure
 
 <br />
 
