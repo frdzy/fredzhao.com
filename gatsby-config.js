@@ -7,13 +7,13 @@ const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 module.exports = {
   siteMetadata: {
     siteTitleAlt: `Fred Zhao · Learn, Invent, Build, Learn`,
-    author: `Fred Y. Zhao`,
+    author: `Fred Zhao`,
     siteImage: `/android-chrome-512x512.png`,
     siteLanguage: 'en-US',
     siteDescription: '',
     siteUrl: 'http://www.fredzhao.com',
     siteHeadline: '',
-    siteTitle: 'Fred Y. Zhao',
+    siteTitle: 'Fred Zhao',
   },
   plugins: [
     {
@@ -22,10 +22,6 @@ module.exports = {
       options: {
         formatString: 'YYYY.MM.DD',
         navigation: [
-          {
-            title: `fredzhao.com`,
-            slug: `/`,
-          },
           {
             title: `Blog`,
             slug: `/blog`,
