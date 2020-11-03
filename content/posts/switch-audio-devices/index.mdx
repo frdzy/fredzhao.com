@@ -68,7 +68,7 @@ Source: [How To Assign Keyboard Shortcuts To AppleScript and Automator Actions](
 ## 3. (Workaround for a Mac OS X bug) Manually invoke those services from the Finder menu
 
 Finally, everything looked like it was ready to go, but the hotkeys don't seem to do anything.
-It turned out that I needed to open `Finder \ Services` first before the keyboard shortcuts 
+It turned out that I needed to open `Finder \ Services` first before the keyboard shortcuts
 could activate.
 
 ![Finder example](./switch_audio_finder_services.png)
@@ -77,6 +77,13 @@ Source: [Keyboard shortcuts not working for services](https://discussions.apple.
 
 Another workaround is to use hotkeys that have the Cmd modifier key. See more on
 that in [this StackExchange answer](https://apple.stackexchange.com/a/337176).
+
+## 4. (Optional) Configuring for AirPods
+
+In the case of AirPods, if they're not yet paired (e.g. because they're
+currently paried to a phone), then it's possible that the Automator script will
+fail. An alternative to the Quick Action is to run an AppleScript Application.
+See more on configuring that in [this article](https://howchoo.com/macos/connect-airpods-with-keyboard-shortcut-in-macos).
 
 ## Z. Appendix: what I Googled
 
