@@ -82,10 +82,13 @@ that in [this StackExchange answer](https://apple.stackexchange.com/a/337176).
 
 In the case of AirPods, if they're not yet paired (e.g. because they're
 currently paired to a phone), then it's possible that the Automator script will
-fail. They can be instead toggled via a bluetooth-based script, as seen from
+fail. They can be instead toggled via a bluetooth-based AppleScript, as seen from
 [this Reddit answer](https://www.reddit.com/r/MacOS/comments/i4czgu/big_sur_airpods_script/gck3gz3/):
 
 ~~~
+-- Reminder that this is an AppleScript instead of a Shell Script, so
+-- make sure to select the proper option from Automator before pasting this
+
 use framework "IOBluetooth"
 use scripting additions
 
