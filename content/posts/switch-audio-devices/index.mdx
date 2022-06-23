@@ -81,9 +81,34 @@ that in [this StackExchange answer](https://apple.stackexchange.com/a/337176).
 ## 4. (Optional) Configuring for AirPods
 
 In the case of AirPods, if they're not yet paired (e.g. because they're
-currently paried to a phone), then it's possible that the Automator script will
-fail. An alternative to the Quick Action is to run an AppleScript Application.
-See more on configuring that in [this article](https://howchoo.com/macos/connect-airpods-with-keyboard-shortcut-in-macos).
+currently paired to a phone), then it's possible that the Automator script will
+fail. They can be instead toggled via a bluetooth-based script, as seen from
+[this Reddit answer](https://www.reddit.com/r/MacOS/comments/i4czgu/big_sur_airpods_script/gck3gz3/):
+
+~~~
+use framework "IOBluetooth"
+use scripting additions
+
+set AirPodsName to "AirPods"
+
+on getFirstMatchingDevice(deviceName)
+	repeat with device in (current application's IOBluetoothDevice's pairedDevices() as list)
+		if (device's nameOrAddress as string) contains deviceName then return device
+	end repeat
+end getFirstMatchingDevice
+
+on toggleDevice(device)
+	if not (device's isConnected as boolean) then
+		device's openConnection()
+		return "Connecting " & (device's nameOrAddress as string)
+	else
+		device's closeConnection()
+		return "Disconnecting " & (device's nameOrAddress as string)
+	end if
+end toggleDevice
+
+return toggleDevice(getFirstMatchingDevice(AirPodsName))
+~~~
 
 ## Z. Appendix: what I Googled
 
