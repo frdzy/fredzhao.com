@@ -36,7 +36,7 @@ Note that my `SwitchAudioSource` directory might not be the same as yours. Run
 `$ which SwitchAudioSource` to customize the path as is appropriate for you. In
 my case, it's `/usr/local/bin/SwitchAudioSource`.
 
-~~~
+```
 " Service 1: 'Audio/ Switch to Laptop'
 /usr/local/bin/SwitchAudioSource -t input -s 'Built-in Microphone'
 /usr/local/bin/SwitchAudioSource -t output -s 'Built-in Output'
@@ -48,11 +48,12 @@ my case, it's `/usr/local/bin/SwitchAudioSource`.
 " Service 3: 'Audio/ Switch to Headset'
 /usr/local/bin/SwitchAudioSource -t input -s 'HyperX Cloud Flight Wireless Headset'
 /usr/local/bin/SwitchAudioSource -t output -s 'HyperX Cloud Flight Wireless Headset'
-~~~
+```
 
 Source: [Switch Audio Outputs with a Keyboard Shortcut on OS X](http://apetronix.com/switch-audio-outputs-with-a-keyboard-shortcut-on-os-x/)
 
 ## 2. Assign hotkeys to those Automator services
+
 Next, I went to OS X's `System Preferences \ Keyboard \ Shortcuts` to set up keyboard-based
 activation of each service.
 
@@ -85,7 +86,7 @@ currently paired to a phone), then it's possible that the Automator script will
 fail. They can be instead toggled via a bluetooth-based AppleScript, as seen from
 [this Reddit answer](https://www.reddit.com/r/MacOS/comments/i4czgu/big_sur_airpods_script/gck3gz3/):
 
-~~~
+```
 -- Reminder that this is an AppleScript instead of a Shell Script, so
 -- make sure to select the proper option from Automator before pasting this
 
@@ -111,19 +112,18 @@ on toggleDevice(device)
 end toggleDevice
 
 return toggleDevice(getFirstMatchingDevice(AirPodsName))
-~~~
+```
 
 ## Z. Appendix: what I Googled
 
 1. "mac hotkey change output device": the apetronix link was the second result, though I also read through several
    other results from macrumors, stackexchange, and personal blog posts.
-    1. A stackexchange article (third result) showed me how to use Automator as an easier approach to AppleScript:
-       [Is it possible to make a hotkey for switching audio 
-       output?](https://apple.stackexchange.com/questions/258028/is-it-possible-to-make-a-hotkey-for-switching-audio-output)
-    2. A personal blog post, [Switching your Mac’s audio output device with a keyboard 
-       shortcut](https://javenmsp.wordpress.com/2016/09/01/switching-your-macs-audio-output-device-with-a-keyboard-shortcut/),
-       showed an example of having a single hotkey with number-based menus to toggle between separate devices,
-       though I ended up not doing this
+   1. A stackexchange article (third result) showed me how to use Automator as an easier approach to AppleScript:
+      [Is it possible to make a hotkey for switching audio
+      output?](https://apple.stackexchange.com/questions/258028/is-it-possible-to-make-a-hotkey-for-switching-audio-output)
+   2. A personal blog post, [Switching your Mac’s audio output device with a keyboard
+      shortcut](https://javenmsp.wordpress.com/2016/09/01/switching-your-macs-audio-output-device-with-a-keyboard-shortcut/),
+      showed an example of having a single hotkey with number-based menus to toggle between separate devices,
+      though I ended up not doing this
 2. The keyboard-to-Automator setup was directly mentioned from the apetronix link. However, it's a bit buried.
 3. "osx services hotkey not working" helped surface the final bug workaround
-

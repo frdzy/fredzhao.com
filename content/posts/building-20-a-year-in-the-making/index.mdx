@@ -2,6 +2,7 @@
 title: Building 20 -- A Year in the Making
 date: 2015-04-05
 ---
+
 import Building20Container from './Building20Container';
 
 In the months leading up to the construction of the Facebook campus's new
@@ -19,8 +20,8 @@ Here is the resulting time lapse.
 This was also an interesting experiment to try out Jekyll's Javascript embedding
 feature. To summarize the choices I made:
 
-* Everything is implemented via [React](https://facebook.github.io/react/)
-* Manual step to process JS: `babel --presets /usr/local/lib/node_modules/babel-preset-react public/js/src/ --out-dir public/js/build/`
+- Everything is implemented via [React](https://facebook.github.io/react/)
+- Manual step to process JS: `babel --presets /usr/local/lib/node_modules/babel-preset-react public/js/src/ --out-dir public/js/build/`
 
 There are several improvements I could make here: browser-side transformations,
 build scripts, etc. I chose to forego them all and also incur the cost of some
@@ -29,10 +30,10 @@ of Jekyll.
 
 A few helpful articles I referenced while making of this post:
 
-* [Official Jekyll documentation](http://jekyllrb.com/docs/frontmatter/)
-* [User-created Jekyll summary](http://jekyllbootstrap.com/lessons/jekyll-introduction.html) that's very useful and very frank
-* [Tip on implementing "Read More" on the generated homepage](http://www.seanbuscay.com/blog/jekyll-teaser-pager-and-read-more/)
-* [Debugging "Read More"](https://github.com/jekyll/jekyll/issues/4070): Restart `jekyll serve` when updating `excerpt_separator`
-* [Debugging `excerpt_separator`](http://stackoverflow.com/a/28083299): Switch the markdown renderer out of `redcarpet`
+- [Official Jekyll documentation](http://jekyllrb.com/docs/frontmatter/)
+- [User-created Jekyll summary](http://jekyllbootstrap.com/lessons/jekyll-introduction.html) that's very useful and very frank
+- [Tip on implementing "Read More" on the generated homepage](http://www.seanbuscay.com/blog/jekyll-teaser-pager-and-read-more/)
+- [Debugging "Read More"](https://github.com/jekyll/jekyll/issues/4070): Restart `jekyll serve` when updating `excerpt_separator`
+- [Debugging `excerpt_separator`](http://stackoverflow.com/a/28083299): Switch the markdown renderer out of `redcarpet`
 
-*Note: This post was cleaned up and finally published on 19 Jan 2016.*
+_Note: This post was cleaned up and finally published on 19 Jan 2016._

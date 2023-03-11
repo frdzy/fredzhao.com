@@ -11,7 +11,9 @@ opportunity to look into other hosting options.
 unbeatable price: free! I then followed [this blog post by Joshua
 Lande](http://joshualande.com/jekyll-github-pages-poole/) to set up this site
 using Jekyll + Poole.
+
 <!-- more -->
+
 The preview looked great!
 
 ### Custom domain name for Project Page
@@ -39,8 +41,8 @@ to propagate.
 
 When I previewed the new page on the `github.io` domain, I noticed the CSS
 resources were not fetched. [The Jekyll docs](http://jekyllrb.com/docs/github-pages/#project-page-url-structure)
-explained how to fix this, so to manually patch up all the occurrences that 
-didn't match up with the documentation, I ran the following find-and-replace 
+explained how to fix this, so to manually patch up all the occurrences that
+didn't match up with the documentation, I ran the following find-and-replace
 script:
 
 ```
@@ -69,11 +71,11 @@ github.io, then on my own domain):
 As a sanity check, I made sure these all worked (including serving up the page
 with the correct CSS):
 
-* Clicking on a post permalink Clicking back to the homepage Clicking "Older" to
-* see an older post Clicking "Older" again to see an even older post Clicking
-* "Newer" to step back Clicking "Newer" to step back one more time Loading
-* `/atom.xml` Loading `/derp` (which doesn't exist) and make sure the "Head back
-* home" works
+- Clicking on a post permalink Clicking back to the homepage Clicking "Older" to
+- see an older post Clicking "Older" again to see an even older post Clicking
+- "Newer" to step back Clicking "Newer" to step back one more time Loading
+- `/atom.xml` Loading `/derp` (which doesn't exist) and make sure the "Head back
+- home" works
 
 ```
 baseurl=/ GET
@@ -85,4 +87,4 @@ baseurl=/fredzhao.com GET http://fredzhao.com/fredzhao.com/public/css/poole.css
 baseurl=/ GET http://public/css/poole.css net::ERR_NAME_NOT_RESOLVED
 ```
 
-*(2015.01.03) Edited to update post title and clarify relative pathing issue*
+_(2015.01.03) Edited to update post title and clarify relative pathing issue_
