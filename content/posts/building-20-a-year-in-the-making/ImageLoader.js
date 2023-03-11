@@ -44,10 +44,7 @@ export default class ImageLoader extends React.Component {
     this.imageLoadStart = Date.now();
 
     if (this.props.artificialLatency) {
-      setTimeout(
-        this.load,
-        this.props.artificialLatency
-      );
+      setTimeout(this.load, this.props.artificialLatency);
     } else {
       this.load();
     }
@@ -79,10 +76,7 @@ export default class ImageLoader extends React.Component {
         loadedSources: loadedSources,
       });
     } else {
-      setTimeout(
-        this.onSlowLoad,
-        50
-      );
+      setTimeout(this.onSlowLoad, 50);
       this.setState({
         loadState: LoadState.LOADED_SLOW_TRANSITIONING,
         loadedSources: loadedSources,
@@ -118,7 +112,7 @@ export default class ImageLoader extends React.Component {
   };
 
   render() {
-    const {artificialLatency, ...restProps} = this.props;
+    const { artificialLatency, ...restProps } = this.props;
 
     var commonStyle = {
       boxSizing: 'border-box',
@@ -144,7 +138,9 @@ export default class ImageLoader extends React.Component {
           onClick={this.onClick}
           onContextMenu={this.onClick}
           style={style}
-          src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 2048 1536'%2F%3E" width="2048" height="1536"
+          src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 2048 1536'%2F%3E"
+          width="2048"
+          height="1536"
         />
       );
     } else if (this.state.loadState === LoadState.LOADED_FAST_DONE) {
@@ -178,11 +174,7 @@ export default class ImageLoader extends React.Component {
         />
       );
     } else {
-      return (
-        <div>
-          Got unexpected load state: {this.state.loadState}
-        </div>
-      );
+      return <div>Got unexpected load state: {this.state.loadState}</div>;
     }
   }
-};
+}

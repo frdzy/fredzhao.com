@@ -20,11 +20,9 @@ export default class Building20 extends React.Component {
 
   _renderImage = (photo) => {
     var src = photo.path;
-    var captions = []
-    photo.caption.split('\n').forEach(function(line, index) {
-      captions.push(
-        <span key={'span.' + index}>{line}</span>
-      );
+    var captions = [];
+    photo.caption.split('\n').forEach(function (line, index) {
+      captions.push(<span key={'span.' + index}>{line}</span>);
       captions.push(<br key={'br.' + index} />);
     });
 
@@ -43,18 +41,15 @@ export default class Building20 extends React.Component {
     return (
       <div style={viewerStyle}>
         <div style={timeLabelStyle}>
-          {photo.timestamp.toDateString()}
-          {' '}
-          ({this.state.currentPhotoIndex + 1} / {this.props.photoData.length})
+          {photo.timestamp.toDateString()} ({this.state.currentPhotoIndex + 1} /{' '}
+          {this.props.photoData.length})
         </div>
         <ImageLoader
           src={src}
           onClick={this._advanceImage}
           artificialLatency={this.state.artificialLatency}
         />
-        <blockquote>
-          {captions}
-        </blockquote>
+        <blockquote>{captions}</blockquote>
       </div>
     );
   };
@@ -68,10 +63,6 @@ export default class Building20 extends React.Component {
   render() {
     var photo = this.props.photoData[this.state.currentPhotoIndex];
 
-    return (
-      <div>
-        {this._renderImage(photo)}
-      </div>
-    );
+    return <div>{this._renderImage(photo)}</div>;
   }
 }

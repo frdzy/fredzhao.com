@@ -20,6 +20,7 @@ module.exports = {
       resolve: `@lekoarts/gatsby-theme-minimal-blog`,
       // See the theme's README for all available options
       options: {
+        mdx: false,
         formatString: 'YYYY.MM.DD',
         navigation: [
           {
@@ -40,6 +41,24 @@ module.exports = {
             name: `LinkedIn`,
             url: `https://www.linkedin.com/in/frdzy`,
           },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 960,
+              quality: 90,
+              linkImagesToOriginal: false,
+              backgroundColor: `transparent`,
+            },
+          },
+          'gatsby-remark-gifs',
         ],
       },
     },

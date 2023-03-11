@@ -14,7 +14,7 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "deploy": "gatsby build && npx gh-pages -d public -b gh-pages"
+    "deploy": "gatsby build && gh-pages -d public -b gh-pages"
   },
   "dependencies": {
     "@lekoarts/gatsby-theme-minimal-blog": "^4.0.0",
@@ -33,6 +33,8 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
+    "gatsby-remark-gifs": "^1.1.0",
+    "gatsby-transformer-remark": "^5.24",
     "gh-pages": "^5.0.0",
     "prettier": "^2.8.4"
   }
