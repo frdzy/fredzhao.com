@@ -1,0 +1,223 @@
+---
+layout: post
+title: 'App building in 2023 - 2024'
+date: 2024-02-29
+---
+
+My last few posts talked about [Airtennis](airtennis-part-1-of-3-challenges-of-scheduling-tennis-in-sf): 
+why this Calendly alternative is helpful, and how to set it up.
+
+Its implementation atop Airtable has been a good enough solution for my personal court tracking,
+from [quick schema updates to some simple Automation 
+reminders](airtennis-part-2-of-3-tennis-scheduling-and-reminders-on-airtable). And best of all, 
+it's free!
+
+Lately, I've been trying to extend it for team tracking, as I've been co-captaining a USTA team 
+since January. This is where I'm running into scaling issues.
+
+To properly utilize Airtable, each teammate should both be an Airtable user, and install the 
+Airtable native app. But because our team coordination already uses a combination of WhatsApp, 
+texting, and email, it's a tougher sell to ask people to alter their habits by creating yet another
+account and install yet another app.
+
+So, being a software engineer, I've been looking at the best alternative: building my own app. This
+post is an exploration of what the possible options are based on my research to date, at the end of
+February 2024.
+
+## Goals
+
+Before jumping into specific details, let's list out some goals for this app. In priority order...
+
+1. **Easy for users**. The main goal is to make it easy for players to organize. If this isn't 
+   reached, the whole exercise will be pretty pointless.
+2. **Simple infra, extensible UI**. I still have a fulltime job, so I don't want to spend time
+   thinking about infrastructure and scaling. But I DO want to hone my product thinking and UI
+   development skills, so the frontend layer should be totally customizable.
+3. **Low cost**. The result should be cheap in both maintenance time and money. Free is best, 
+   but if I need to pay $10 a month, that's an easy cost to stomache. (I'm sure that when/if the
+   scale of this toy app blows up, there will be ways to crowdsource the funding, so in the short
+   term this is definitely more about minimizing maintenance time.)
+
+### Goals for users
+
+What do I mean by "easy for users"? This section is important to sketch out because it will motivate
+a lot of high level decisions.
+
+To brainstorm a bit:
+* I don't want to require people to install yet another app. Is it possible to have all of the 
+  UI run off of a chatbot? Or should I just go with a mobile-friendly website and call it a day?
+* Who is my first set of target audience? Is it all of the competitive tennis players in UTR and 
+  USTA leagues? Or just USTA captains?
+
+Here are some preliminary decisions just so that we can go into picking an implementation:
+1. Start with a mobile-friendly website, use emails to send out confirmations and reminders
+   1. This will cover the largest possible audience, and be the easiest to build for me
+2. Start with the generic use case of two people trying to schedule a singles match (UTR matches or practices)
+   1. This will help me get something useful out the door, and can always be added to later
+
+With that out of the way, let's take a look at how to go about building this.
+
+## Let's build an app
+
+As the saying goes, "The future is already here. It's just not evenly distributed yet." Apps can
+give people a lot of power in terms of organization, influence, and even making a living. But there
+are so many ways to build an app that it's quite mind boggling.
+
+So here's an attempt to break down the decision making into some coarse steps:
+
+### 1. Code or nah?
+
+The first decision is actually pretty meta: do we actually NEED to write code? The best battle is
+the one not fought. Maybe I can just pay for a solution?
+
+| Criteria \ Option | Write code | Nah |
+| ----------------- | ---------- | --- |
+| Easy for users | Maybe | + |
+| Simple infra, extensible UI | + | - Extensibility depends on platform |
+| Low cost | = Costs more time | = Costs more money |
+
+"Nah" is pretty powerful nowadays. The spectrum goes from totally packaged solutions (e.g. Calendly,
+Shopify) to website builders (Squarespace) to app building (Airtable, Retool, Thunkable, Webflow).
+
+That final category gives a lot more customization options by allowing SOME customized code to be
+written, which puts them more into the "low-code" category.
+
+But since I do want to maximize extensibility, let's decide to **write some real code**.
+
+### 2. Where should the code run?
+
+When I first made a personal website during college, I paid something like $5/month for a Virtual
+Private Server on a dedicated webhost. It was a Wordpress site on Dreamhost, I think?
+
+Nowadays, "serverless" is all the rage, due to two important updates over the 15 years since I was
+in school:
+1. Frontends have become very powerful! So a user can navigate to different pages purely from React
+   transitions, as opposed to navigate to separate pages each served from a PHP request 
+2. So backends really just need to call functions to connect the frontend actions to backend
+   database reads/writes. It's pretty overkill to have a reserved server (even if it's a virtual 
+   one) just to answer some sporadic traffic a few times a week. Hobbyist projects definitely fall 
+   into this category!
+
+| Criteria \ Option | Servers | Serverless |
+| ----------------- | ---------- | --- |
+| Simple infra, extensible UI | + | + scheduled functions: depends |
+| Low cost | = | + |
+
+The one exception is that having an actual server would easily allow me to run scheduled functions 
+(as opposed to just answering external requests), whereas in serverless hosting, that's often a 
+separate offering with a separate pricing tier.
+
+To minimize cost, let's go with **serverless** since many providers have very generous free tiers, 
+and see how far we can get.
+
+### 3. Who do I use?
+
+The current hotness seems to be the JAMstack: JavaScript, APIs, and markup. JavaScript allows
+frontend and backend logic to be in the same language; APIs provide the bridge between the UI and 
+the database; and markup is the final presentation.
+
+I went with the first option here, but also listed a second option for future consideration.
+
+1. RedwoodJS on Netlify
+2. NextJS on Vercel
+
+| Criteria \ Option | RedwoodJS on Netlify | NextJS on Vercel |
+| ----------------- | ---------- | --- |
+| Getting started   | +          | ? Haven't tried |
+| Frontend Customizability | =   | ? Haven't tried |
+| Backend Customizability | =    | ? Haven't tried |
+
+In short, the pro AND con of RedwoodJS is that it has a bunch of things "out of the box". The pro is
+that it's very easy to get started, but the con is that anything that breaks in its package are
+tougher to debug. It also has some conventions to learn, such as
+[Cells](https://redwoodjs.com/docs/6.x/cells#how-does-redwood-know-a-cell-is-a-cell), which creates
+magical behaviors that are not very intuitive.
+
+That said, I ended up going with it because it's very fast to get started, and also included several 
+other library choices I would have picked myself anyway:
+
+* TypeScript types, to give more realtime feedback of autocompletion and mistake catching
+* Prisma to connect the API <-> database layers
+* GraphQL to connect the client <-> API layers
+* TailwindCSS for client styling
+* Jest and Storybook for testing (I'm not remotely close to being at the stage of needing tests yet,
+  but these both make sense to me)
+
+It also made a bunch of choices I have less context and opinions about:
+
+* vite: Looks like it helps optimize code bundling; this is just not something I ever had to deal
+  with in my career so far
+* Babel: Transpiling; I vaguely know why this is important, but have never needed to evaluate
+  a provider myself
+
+With Netlify's free tier, I randomly picked a database provider of Planetscale (Railway was another
+alternative, but its free tier caps usage minutes each month). Supabase is another name that comes
+up frequently.
+
+In all, the cost is now roughly $15 / year for the domain name, which is much cheaper than the
+per-month hosting I used back in college.
+
+For comparison, that's the same cost as this blog itself, which has been slightly simpler -- since 
+it's just a static site, I can serve it from Github Pages, as mentioned in the [very first blog
+post](/hello-github-project-page). I've since moved off of Jekyll and onto Gatsby, but that has a
+similar underlying process
+1. a one-time "expensive" build+deploy step happens each time I commit to the repo
+   1. blog: run "gatsby deploy" locally
+   2. app: done by Netlify up to its monthly free tier limit
+2. a much cheaper service cost is absorbed by the hosting platform
+   1. blog: hosted by Github Pages
+   2. app: done by a combination of Netlify's frontend cloud and serverless functions
+3. (a side note: data storage)
+   1. blog: the frontend content IS the data, it's statically generated so no need for a database
+   2. app: free tier of Planetscale to store dynamic, user-created data
+
+## 4. Where is the trend going?
+
+With the above decisions, I have a decent setup that I'm building off of. Cool!
+Now, stepping back a bit, here are some observations I've gathered:
+
+### The playbook for service providers
+
+There's a common playbook. Every provider seems to start somewhere to gain a foothold, and then 
+expand "vertically" to other parts of the layers involved:
+
+* Airtable: started as database with very flexible filters, expanding over the last years to app
+  building, especially within teams and enterprises
+* Retool, Thunkable: started with app building, also started to add to data storage
+* Webflow, Squarespace, Shopify: start with a very specific type of app, and start customizing
+  from there
+* Netlify: started with build+deploy+hosting, also growing into "Connect" to do data storage
+
+### It's all just data... with useful indexes
+
+When I squint my eyes a bit, it's all "just" data.
+
+In the case of my blog, it's a "single user write, multi user read" model; in the case of the 
+tennis tracking app, it's "multi user write and read", so the app needs to add some complexity 
+around **who's** allowed to read/write **which** pieces of data.
+
+The data alone is not sufficient as an app; it's what users do with it that matters. A blog is a
+most-recent feed of posts; the tennis tracking app is a most-recent-and-filtered view of 
+schedules and reservations. 
+
+This simplification isn't meant to trivialize apps, but instead to highlight the power of a good
+index over a canonical and durable form of data store. 
+
+Everything else (build, deploy, hosting, good frontend user experience) are the necessary
+scaffolding to help the end user maximize their ability to use all of this indexed data.
+
+As a comparison, a vague statement like "It's all just data" is akin to "It's all written on 
+paper", without elaborating on all the different ways humanity has learned to produce them (books,
+magazines, and other form of media), consume them (libraries, e-books), distribute them (fax, email,
+air-dropped pamphlets), and more.
+
+### What is my purpose
+
+As a software engineer, I have the entire range of tools at my disposal. On one end of the spectrum,
+I could embrace the no-code and low-code solutions (as I had done so far with Airtable); on the
+other end I could go really raw and write a bunch of things in scratch and host it directly on AWS.
+Where I ended up is somewhere in the middle, perhaps weighed slightly towards the "raw" side.
+
+But I just want to remind myself that, at the end of the day, my purpose is to get out there with
+other tennis players and hit, as well as help THEM hit more with other people. It's not stay inside
+to write code all day.
