@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import Matter from 'matter-js';
 
-const POOL_WIDTH = 600;
-const POOL_HEIGHT = 400;
-const WATER_HEIGHT = 150;
-const PLANK_WIDTH = 200;    
+const POOL_WIDTH = 400;
+const POOL_HEIGHT = 300;
+const POOL_WALL_WIDTH = 10;
+const WATER_HEIGHT = 200;
+const PLANK_WIDTH = 100;
 const PLANK_HEIGHT = 20;
 
 export default function WaterPlankSimulation({ plankAngle }) {
@@ -56,21 +57,21 @@ export default function WaterPlankSimulation({ plankAngle }) {
 
     // Create walls and pool bottom
     const walls = [
-      Bodies.rectangle(0, POOL_HEIGHT / 2, 20, POOL_HEIGHT, {      // Left wall
+      Bodies.rectangle(0, POOL_HEIGHT / 2, POOL_WALL_WIDTH, POOL_HEIGHT, {      // Left wall
         isStatic: true,
         render: { 
           fillStyle: '#555555',
           visible: true
         }
       }),
-      Bodies.rectangle(POOL_WIDTH, POOL_HEIGHT / 2, 20, POOL_HEIGHT, {    // Right wall
+      Bodies.rectangle(POOL_WIDTH, POOL_HEIGHT / 2, POOL_WALL_WIDTH, POOL_HEIGHT, {    // Right wall
         isStatic: true,
         render: { 
           fillStyle: '#555555',
           visible: true
         }
       }),
-      Bodies.rectangle(POOL_WIDTH / 2, POOL_HEIGHT, POOL_WIDTH, 40, {    // Pool bottom
+      Bodies.rectangle(POOL_WIDTH / 2, POOL_HEIGHT, POOL_WIDTH, POOL_WALL_WIDTH * 2, {    // Pool bottom
         isStatic: true,
         render: { 
           fillStyle: '#444444',
@@ -90,10 +91,10 @@ export default function WaterPlankSimulation({ plankAngle }) {
     });
 
     // Create particles with adjusted density
-    const particles = Array.from({ length: 50 }, (_, i) => 
+    const particles = Array.from({ length: 50 }, () => 
       Bodies.circle(
-        Math.random() * 560 + 20,  // Keep within walls
-        POOL_HEIGHT - WATER_HEIGHT + Math.random() * WATER_HEIGHT,
+        Math.random() * (POOL_WIDTH - POOL_WALL_WIDTH * 2) + POOL_WALL_WIDTH,  // Keep within walls
+        POOL_HEIGHT - WATER_HEIGHT + Math.random() * WATER_HEIGHT + PLANK_HEIGHT / 2,
         3,
         {
           density: 0.6,    // Adjusted for better floating
@@ -124,35 +125,34 @@ export default function WaterPlankSimulation({ plankAngle }) {
     Matter.Events.on(engine, 'beforeUpdate', () => {
       particles.forEach(particle => {
         // Stronger buoyancy for particles
-        if (particle.position.y > 280) {  // Water level
+        if (particle.position.y > POOL_HEIGHT - WATER_HEIGHT + PLANK_HEIGHT) {  // Water level
           Matter.Body.applyForce(particle, particle.position, {
             x: 0,
             y: -0.008  // Progressive buoyancy force
           });
         }
 
-        // Rightward movement
-        Matter.Body.setVelocity(particle, {
-          x: 2,
+        const velocity = {
+          // Rightward movement
+          x: 1,
           y: particle.velocity.y
-        });
+        };
 
-        // Wrap particles
-        if (particle.position.x > POOL_WIDTH - 20) {
-          Matter.Body.setPosition(particle, {
-            x: 20,
-            y: particle.position.y,
-          });
-          Matter.Body.setVelocity(particle, {
-            x: 1,
-            y: particle.velocity.y,
-          });
-        }
+        const position = {
+          // Wrap particles
+          x: (particle.position.x > POOL_WIDTH - 20)
+            ? POOL_WALL_WIDTH
+            : particle.position.x,
+          y: particle.position.y,
+        };
+
+        Matter.Body.setVelocity(particle, velocity);
+        Matter.Body.setPosition(particle, position);
       });
 
       // Strong buoyancy for plank
-      if (plank.position.y > 270) {  // Slightly higher threshold for plank
-        const buoyancyForce = -1;  // Progressive buoyancy
+      if (plank.position.y > POOL_HEIGHT - WATER_HEIGHT + PLANK_HEIGHT / 2) {  // Slightly higher threshold for plank
+        const buoyancyForce = -0.5;  // Progressive buoyancy
         
         Matter.Body.applyForce(plank, plank.position, {
           x: 0,
@@ -162,7 +162,7 @@ export default function WaterPlankSimulation({ plankAngle }) {
         // Strong damping for stability
         Matter.Body.setVelocity(plank, {
           x: plank.velocity.x * 0.98,
-          y: plank.velocity.y * 0.95
+          y: plank.velocity.y * 0.95,
         });
       }
 
@@ -173,7 +173,6 @@ export default function WaterPlankSimulation({ plankAngle }) {
         y: 0
       });
 
-      // Matter.Body.setAngularVelocity(plank, -0.01);
       Matter.Body.setAngle(plank, plankAngle);
     });
 
