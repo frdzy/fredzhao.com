@@ -1,0 +1,177 @@
+---
+layout: post
+title: JS development in 2025
+date: 2025-01-01
+---
+
+Recently I talked to other software engineers looking to build some simple apps,
+and recommended RedwoodJS as a simple starting point (based on [this earlier 
+post](/app-building-in-2023-2024)). Since these folks haven't written production
+JavaScript in recent years, I realized that there were quite a few decisions to
+make and understand... many of which I didn't *really* understand myself either,
+despite working in JavaScript more seriously the last 5 years (and casually the
+5 years prior).
+
+So, this post is an attempt to summarize the state of JavaScript development 
+(abbreviated JS below) going into 2025. Think of its target audience as any of
+these personas: a college new grad eager to jump into the industry; a vetern to 
+programming who has been spared from needing to write JS thus far; or someone
+who, like me, has worked with JS for a while, but at this point feel [almost too
+afraid to ask](https://knowyourmeme.com/memes/afraid-to-ask-andy) "why?"
+
+![](https://i.kym-cdn.com/entries/icons/original/000/016/724/prattypratprat.PNG)
+
+If any of those descriptions sounds like you, read on!
+
+## Summary
+
+This post will run through an explanation of the following checklist and table. 
+Most of it can be summarized by the phrase **glorious chaos**; the table (and 
+linked sections below it) will also try to explain some recommendations and why
+to navigate through that chaos.
+
+1. [ ] Use `nvm` to install `node`
+2. [ ] Run `corepack enable` to allow packages to specify their package managers and node versions
+3. [ ] Read the rest of the table below
+
+<a name="r"></a>
+⬇️  NOTE: "Recommendation" options denoted by (R) are supported out-of-the-box by
+RedwoodJS.
+
+| Layer/Decision | "Why is this even needed?!" | Recommendation | Explanation |
+| --- | --- | --- | --- |
+| **Run the code/** |
+| Target Version | JS evolved over time, and many things from its syntax to keywords have changed significantly. We need to decide on a baseline version for this interpretation standard | `ES2022`? [(R)](#r) | Anything ES6 (aka `ES2015`) and later will have the most significant and useful improvements. `ES2022` balances between modern features and broad compatibility, [expanded below](#target-version) |
+| Backend Server | There are lots of language options for the server such as Java/Kotlin, Python, Rust, etc; even within JS, several options exist today (`node, deno, bun`). We need to pick something to run the server code | Use `nvm` to install `node` at `v22` | Node still has significant market share, and therefore a significant amount of community support to help you debug. For [most of 2025](https://nodejs.org/en/about/previous-releases) the long-term supported (LTS) `node` version will be `v22`, which has enhanced performance with better TypeScript integration; [expanded below](#backend-server) |
+| Frontend UI | JS itself doesn't make it easy to write user interfaces. Many UI frameworks exist to make this easier, so we need to pick one | `react` at `v18.3` [(R)](#r) | Huge ecosystem to get community help and learn from examples. `v18` has been out [since 2022](https://react.dev/blog/2022/03/29/react-v18) and `v18.3` adds helpful warnings for upgrading to `v19` as mentioned in the latter's [upgrade guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide) |
+| Frontend Web Bundler | Unlike many other programming languages, JS may need to run on browsers, and source files need to be delivered there somehow, [expanded below](#frontend-web-bundling). We need to pick a tool to help do this | `vite` [(R)](#r) | Fast build times, native support for TypeScript; see the "Dynamic vs. Static Typing" row later in this table for more on TypeScript |
+| Package Manager | You'll almost never build purely from scratch, and instead usually use libraries (packages) that others have published. <br></br> `node` ships with a manager `npm`, but there are also alternatives like `pnpm` and `yarn` | `pnpm` | `pnpm` is mature enough, benefits from [efficient disk usage](https://pnpm.io/motivation), and has good dependency and workspace management |
+| **Write the code/** |
+| Dynamic vs. Static Typing | JS is dynamically typed, which allows for faster code writing than statically typed languages; static typing helps reduce errors, which speeds up development in the long run. We need to pick a side to err on | Static typing, using TypeScript at [the latest version](https://www.typescriptlang.org/) [(R)](#r) | For someone new to JS, static typing will force a more explicit understanding; for everyone, the benefits (and tradeoffs) of static typing are [expanded below](#typing-typescript) |
+| Linter | Linting further reduces errors, [expanded below](#linting) | ESLint with `typescript-eslint` | Combined JS/TS linting with type-aware rules, to help new and veteran JS programmers alike reduce errors |
+| Formatter | Languages like Go provide default formatters like `gofmt`, but JS doesn't | Prettier [(R)](#r) | An auto-formatter helps keep a consistent code style, so you can save energy from thinking about "correct" formatting to devote to the business logic instead. [Biome](https://biomejs.dev) is up-and-coming, but let's go with Prettier as a proven and opinionated tool for now |
+
+## Glorious chaos
+
+"Glorious chaos" is neither praise nor critique for the language, but simply a
+reflection of how JS has evolved in a distributed way over the years, and an 
+explanation to brace yourself for its tradeoffs.
+
+The glory comes from using a language this can run everywhere; the chaos is the
+consequent complexity that you'll need to tame. This post will, hopefully, help
+you navigate through it all and emerge with your sanity intact.
+
+## Longer explanation
+
+At the end of the day, the "Recommendation" options may not always be feasible
+if the framework you want to use simply necessitates different options. With 
+`corepack enable` run, you'll usually use the same package manager and node
+version as the framework you're building on anyway. So this column really means
+a recommendation when starting a new project today.
+
+### <a name="target-version"></a>Target Version
+
+JS's language specification is abbreviated ES for ECMAScript, whose [namesake
+Wikipedia article](https://en.wikipedia.org/wiki/ECMAScript) elaborates on the
+history. To over-simplify a bit, we can think of these as synonymous for the
+purpose of the rest of this post:
+* JavaScript (JS)
+* ECMAScript (ES)
+
+For a language like Python, it's **both a language and implementation**, in that
+python.org defines the language specification *and* provides a default 
+implementation CPython, elaborated in [this Reddit 
+thread](https://www.reddit.com/r/learnpython/comments/1czzg57/understanding_what_cpython_actually_is_has/).
+That allows for a more straightforward standardization process.
+
+In contrast, JS is *just* a language, because there's no prescriptive
+implementation dictating what browser or backend you (or your users) ought to
+be using. But over time, it inevitably had to evolve to fill in various gaps,
+like how to handle async processing (callbacks -> promises -> async functions)
+and what default functions exist on `Array` objects.
+
+Put another way, JS has had a distributed evolution, from different engines 
+implementing a language specification, that happened simultaneously with the
+language specification's evolution itself:
+
+* Runtime engines include `JavaScriptCore, SpiderMonkey, V8`, each of which 
+  are used in some browsers and backends
+* The language specification has evolved as part of a committee called 
+  [TC39](https://tc39.es/)
+
+Long story short, the choice of `ES2022` is a balance between "new-enough"
+language specifications, and old-enough to have enough browser support.
+
+### <a name="backend-server"></a>Backend Server
+Language choice is worth a post itself, so we'll assume JS just for brevity.
+While it's not a deciding factor, having "one" language (ignoring the "target 
+versions" consideration!) is a helpful simplification.
+
+Node has different versions (just like Python, Rust, etc.), and the packages 
+you want to use may target a minimum requirement that necessitates a higher one
+than what your machine currently has installed... or a lower one. 
+
+So, `nvm` helps quickly switch between versions. This also helps resolve
+seemingly random permission issues that may arise from otherwise installing
+`node` globally, as explained in [this StackOverflow
+question](https://stackoverflow.com/questions/73156323/internal-error-eacces-permission-denied-symlink-lib-node-modules-corepack).
+
+Finally, the choice for `v22` is similar to the above one for `ES2022`:
+something new enough to be officially well-supported, but not so new that there
+are still bugs to be ironed out.
+
+### <a name="frontend-web-bundling"></a>Frontend Web Bundling
+
+Unlike the execution of JS on the backend that has direct access to source
+files, frontend JS execution requires the code to somehow be delivered to users'
+browsers. This has evolved quite a bit over time, in both the way a programmer
+needs to separate their modules
+
+[This article by Devlin Glasman on Modules and Bundling](https://8thlight.com/insights/a-history-of-javascript-modules-and-bundling-for-the-post-es6-developer)
+does a great job elaborating on the history over time.
+
+The choice for `vite` is due to its speed and plugin system.
+
+### <a name="typing-typescript"></a>Typing and TypeScript
+
+Keep in mind that a required tradeoff is that Static Typing will reject some 
+valid code [by design](https://courses.cs.washington.edu/courses/cse341/04wi/lectures/13-dynamic-vs-static-types.html),
+which may necessitate writing the code differently.
+
+For the latest version of TypeScript: features tend to be additive, so picking 
+whatever is the latest version should be safe. Just be sure to install at the 
+project scope and not global scope!
+
+Some helpful options are off by default, and need to be enabled from a
+configuration file called `tsconfig.json`. [This 
+article](https://www.totaltypescript.com/tsconfig-cheat-sheet) provides a good 
+initial config file. I like it because it has `noUncheckedIndexedAccess` enabled
+by default, which passes my bar for a thoughtful starting point.
+
+### <a name="linting"></a>Linting
+
+Linting is very closely related. It helps maintain clean coding conventions,
+which similar to static typing will reject more buggy code at the consequence of
+also rejecting some benign code. This is usually still worth the tradeoff!
+
+### Other considerations
+
+The above considerations aren't the only decisions you may need to make. The
+glorious chaos of JS development means there are even more rabbit holes you can
+dive into.
+
+I offer some shorter recommendations and my current explanations. They may still
+turn out to be important considerations for your app building experience, but I
+expect them to be more framework- or project-driven decisions not always with
+your control.
+
+| Decision | 2025 Recommendation | Explanation |
+| --- | --- | --- |
+| Importing Modules | (Nothing to recommend) | Since you don't have direct control over how others publish their modules, just be aware that [there are many ways to import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#importing_features_into_your_script)! |
+| Exporting Modules | [Export as ES module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#exporting_module_features) [(R)](#r) | |
+| Client \<-> Server Protocol | GraphQL [(R)](#r) | |
+| IDE/Editor | VSCode | Strong TypeScript support, integrated debugging. I use `vim` myself, but would recommend VSCode as a much more feature-fledged IDE for someone totally new |
+| Testing Framework | Storybook for UI [(R)](#r), Jest for everything else | |
+| Styling | TailwindCSS [(R)](#r) plus a corresponding component library like flowbite | |
+
+
