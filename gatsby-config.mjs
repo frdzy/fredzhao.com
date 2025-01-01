@@ -1,10 +1,9 @@
-require(`dotenv`).config({
-  path: `.env`,
-});
+import 'dotenv/config';
+import remarkGfm from 'remark-gfm';
 
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
 
-module.exports = {
+export default {
   siteMetadata: {
     siteTitleAlt: `Fred Zhao · Learn, Invent, Build, Learn`,
     author: `Fred Zhao`,
@@ -60,6 +59,9 @@ module.exports = {
           },
           'gatsby-remark-gifs',
         ],
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
       },
     },
     {
