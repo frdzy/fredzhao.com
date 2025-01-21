@@ -68,8 +68,6 @@ But if not, [Visual Studio Code](https://code.visualstudio.com/) has lots of goo
 other decisions that will appear later, so you can get to effective coding faster with relatively
 low setup cost.
 
-
-
 ## <a id="level-1"></a> [Level 1] Make it work
 
 In the first level, we'll examine the most basic decisions to start writing JavaScript code. The
@@ -148,7 +146,6 @@ registry, but there are many alternatives to both.
 
 ```shell
 $ corepack enable pnpm
-$ corepack use pnpm
 $ pnpm init
 $ pnpm install
 ```
@@ -258,6 +255,25 @@ actually be assembled and delivered.
 $ pnpm add -D vite
 ```
 
+Add two files, `index.html` and `hello.js`:
+
+```html
+<html>
+  <head><script src="hello.js"></script></head>
+  <body>World!</body>
+</html>
+```
+
+```js
+window.alert('Hello...');
+```
+
+And now you can view it bundled together via
+
+```shell
+$ pnpm vite
+```
+
 **🤔 Why does it matter? What alternatives are there?**
 
 The earlier mentioned [article by Devlin Glasman on Modules and
@@ -285,7 +301,7 @@ those imperative operations.
 **`react` at `v18.3`**:
 
 ```shell
-$ pnpm add -D react@18.3 react-dom@18.3
+$ pnpm add react@18.3 react-dom@18.3
 ```
 
 **🤔 Why does it matter? What alternatives are there?**
@@ -330,6 +346,14 @@ Some helpful options are off by default, and need to be enabled from a configura
 `tsconfig.json`. [This article](https://www.totaltypescript.com/tsconfig-cheat-sheet) provides a
 good initial config file. I like it because it has `noUncheckedIndexedAccess` enabled by default,
 which passes my bar for a thoughtful starting point.
+
+Now, you can manually do a type check using the terminal, or set up your editor to do it
+automatically on code changes. VSCode will auto-suggest a plugin; google to set it up for other
+editors.
+
+```shell
+$ pnpm tsc
+```
 
 **🤔 Why does it matter? What alternatives are there?**
 
@@ -421,6 +445,13 @@ $ pnpm add -D eslint @eslint/js typescript-eslint
 Similar to TypeScript, this also needs some initial configuration. Refer to its official site for
 a [recommended configuration](https://typescript-eslint.io/getting-started#step-2-configuration).
 
+Like before, use the terminal to run it directly, or set up auto lint warnings with your editor
+(VSCode-suggested plugin, or google for your own browser).
+
+```shell
+$ pnpm tsc
+```
+
 **🤔 Why does it matter? What alternatives are there?**
 
 Linting is very closely related to typing. It helps maintain clean coding
@@ -450,6 +481,23 @@ include our future selves.
 
 ```shell
 $ pnpm add -D prettier
+```
+
+Then, add an ignore file so it won't format certain files, such as the one that `pnpm`
+auto-generated.
+
+```
+# Add this to a new file: .prettierignore
+# Ignore files for pnpm
+pnpm-lock.yaml
+```
+
+Finally, we can auto-format from one of two ways: using a terminal command, or from an editor's
+autofix whenever we save a file (VSCode will auto-prompt this; Google for specific instructions for
+other editors).
+
+```shell
+$ pnpm prettier -w .
 ```
 
 **🤔 Why does it matter? What alternatives are there?**
@@ -491,7 +539,7 @@ compatibility.
 **GraphQL**:
 
 ```shell
-$ pnpm add -D graphql
+$ pnpm add graphql
 ```
 
 **🤔 Why does it matter? What alternatives are there?**
