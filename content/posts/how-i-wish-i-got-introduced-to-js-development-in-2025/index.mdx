@@ -293,8 +293,10 @@ The choice for `vite` is due to its speed and plugin system. I've also seen othe
 
 **🤷 What's the reason this decision exists?**
 
-Today are lots of options to help you build out the UI very quickly, so we don't need to resort to
-those imperative operations.
+Frontend development was once done with very separate layers over HTML and JavaScript, with the
+latter only directly able to do very imperative operations to the Document Object Model (DOM).
+Today there are lots of options to help you build out the UI very quickly, so we don't need to 
+resort to those imperative operations.
 
 **⚡️ What's a simple recommendation on a new greenfield project today?**
 
@@ -306,19 +308,19 @@ $ pnpm add react@18.3 react-dom@18.3
 
 **🤔 Why does it matter? What alternatives are there?**
 
-Frontend development was once done with very separate layers over HTML and JavaScript, with the
-latter only directly able to do very imperative operations to the Document Object Model (DOM). [This
-article](https://medium.com/kubo/frontend-before-react-eadeb8fd1dda) is a great history over the
-steps that web programming has gone through over the years.
+[This article](https://medium.com/kubo/frontend-before-react-eadeb8fd1dda) is a great summary of the
+history that web programming has gone through over the years.
 
-`react` emerges as the recommendation due to its huge ecosystem to get community help and learn from
-examples. `v18` has been out [since 2022](https://react.dev/blog/2022/03/29/react-v18) and `v18.3`
+`react` emerges as my recommendation because my professional experience has all been on it, so
+that's a simple and easy bias.
+
+For someone new, I think it's also great for a huge ecosystem to get community help and learn from
+examples. Aside from React, there are other popular options like `vue` and `svelte`, so any option
+with a large community and good documentation could be worth a try.
+
+React's `v18` has been out [since 2022](https://react.dev/blog/2022/03/29/react-v18) and `v18.3`
 adds helpful warnings for upgrading to `v19` as mentioned in the latter's [upgrade
 guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide).
-
-Aside from React, there are other popular options like `vue` and `svelte`, but React has been the
-most widely used and has the most resources available. My experience from Facebook and Airtable has
-all been with React, so I'm thus biased towards it.
 
 ## <a id="level-2"></a> [Level 2] Make it right
 
@@ -329,10 +331,11 @@ robustly on top of the basic decisions made in Level 1.
 
 **🤷 What's the reason this decision exists?**
 
-JS is dynamically typed, which allows for faster code writing than statically typed languages.
+JS is dynamically typed, which allows for faster code writing than statically typed languages. We
+could just keep writing regular ("vanilla") JS this way.
+
 However, it's possible to use development-time tools to effectively make it a statically typed
-language instead, which helps reduce errors and speed up development in the long run. We need to
-pick a side to err on.
+language instead, which helps reduce errors and speed up development in the long run.
 
 **⚡️ What's a simple recommendation on a new greenfield project today?**
 
