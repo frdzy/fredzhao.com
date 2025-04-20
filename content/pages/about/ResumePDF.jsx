@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
-import { graphql, useStaticQuery } from 'gatsby';
 
 const styles = StyleSheet.create({
   page: { padding: 30 },
@@ -32,17 +31,8 @@ const RoleHeader = ({ text }) => {
   );
 };
 
-export const ResumePDF = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      mdx(fileAbsolutePath: { regex: "/resume.mdx$/" }) {
-        body
-        frontmatter {
-          title
-        }
-      }
-    }
-  `);
+export default function ResumePDF({ pageContext }) {
+  const { mdxContent } = pageContext;
 
   return (
     <PDFViewer style={{ width: '100%', height: '100vh' }}>
