@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Page,
@@ -31,19 +32,36 @@ const styles = StyleSheet.create({
 });
 
 const RoleHeader = ({ text }) => {
-  const [role, company, period] = text.split('|').map((s) => s.trim());
-
+  const [role, company, location, period] = text.split('|').map((s) => s.trim());
   return (
     <View style={styles.roleContainer}>
-      <Text style={styles.roleText}>{role}</Text>
-      <Text style={styles.roleText}>{company}</Text>
+      <Text style={styles.roleText}>{`${role} | ${company}`}</Text>
       <Text style={styles.roleText}>{period}</Text>
     </View>
   );
 };
 
+const parseMDXContent = (content) => {
+  const sections = {};
+  let currentSection = '';
+  
+  content.split('\n').forEach(line => {
+    if (line.startsWith('## ')) {
+      currentSection = line.replace('## ', '').trim();
+      sections[currentSection] = [];
+    } else if (line.startsWith('- ')) {
+      if (currentSection) {
+        sections[currentSection].push(line.replace('- ', '').trim());
+      }
+    }
+  });
+  
+  return sections;
+};
+
 export default function ResumePDF({ pageContext }) {
   const { mdxContent } = pageContext;
+  const sections = parseMDXContent(mdxContent.body);
 
   return (
     <PDFViewer style={{ width: '100%', height: '100vh' }}>
@@ -54,24 +72,14 @@ export default function ResumePDF({ pageContext }) {
             Contact information available by request over Facebook or LinkedIn
           </Text>
 
-          {/* We'll need to process data.mdx.body to extract sections */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Summary</Text>
-            <Text style={styles.bullet}>
-              • Experienced "one to a thousand" engineering leader and tryhard
-              dogfooder
-            </Text>
-            <Text style={styles.bullet}>
-              • Expertise in server-side abstractions, competence in fullstack
-              development
-            </Text>
-            <Text style={styles.bullet}>
-              • Passionate about improving existing systems, cross-team
-              collaboration, and building knowledge repositories
-            </Text>
-          </View>
-
-          {/* Add more sections using data.mdx.body */}
+          {Object.entries(sections).map(([title, items]) => (
+            <View key={title} style={styles.section}>
+              <Text style={styles.sectionTitle}>{title}</Text>
+              {items.map((item, index) => (
+                <Text key={index} style={styles.bullet}>• {item}</Text>
+              ))}
+            </View>
+          ))}
         </Page>
       </Document>
     </PDFViewer>
