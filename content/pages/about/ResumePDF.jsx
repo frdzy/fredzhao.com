@@ -31,6 +31,12 @@ const styles = StyleSheet.create({
   bullet: { fontSize: 10, marginLeft: 10 },
 });
 
+const styles = StyleSheet.create({
+  ...styles,
+  bold: { fontWeight: 'bold' },
+  link: { color: 'blue', textDecoration: 'underline' },
+});
+
 const RoleHeader = ({ text }) => {
   const [role, company, location, period] = text.split('|').map((s) => s.trim());
   return (
@@ -39,6 +45,22 @@ const RoleHeader = ({ text }) => {
       <Text style={styles.roleText}>{period}</Text>
     </View>
   );
+};
+
+const renderMarkdownText = (text) => {
+  // Process bold text marked with **
+  const boldParts = text.split(/(\*\*.*?\*\*)/g);
+  return boldParts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <Text key={i} style={styles.bold}>{part.slice(2, -2)}</Text>;
+    }
+    // Process links marked with [text](url)
+    const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
+    if (linkMatch) {
+      return <Link key={i} style={styles.link} src={linkMatch[2]}>{linkMatch[1]}</Link>;
+    }
+    return <Text key={i}>{part}</Text>;
+  });
 };
 
 const parseMDXContent = (content) => {
@@ -76,7 +98,7 @@ export default function ResumePDF({ pageContext }) {
             <View key={title} style={styles.section}>
               <Text style={styles.sectionTitle}>{title}</Text>
               {items.map((item, index) => (
-                <Text key={index} style={styles.bullet}>• {item}</Text>
+                <Text key={index} style={styles.bullet}>• {renderMarkdownText(item)}</Text>
               ))}
             </View>
           ))}
