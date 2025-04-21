@@ -46,6 +46,13 @@ export default class Building20 extends React.Component {
         </div>
         <ImageLoader
           src={src}
+          nextSrcs={[1, 2, 3, 4, 5].map(
+            (offset) =>
+              this.props.photoData[
+                (this.state.currentPhotoIndex + offset) %
+                  this.props.photoData.length
+              ].path
+          )}
           onClick={this._advanceImage}
           artificialLatency={this.state.artificialLatency}
         />
