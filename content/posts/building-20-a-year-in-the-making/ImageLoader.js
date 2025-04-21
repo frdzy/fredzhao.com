@@ -134,44 +134,83 @@ export default class ImageLoader extends React.Component {
         commonStyle
       );
       return (
-        <img
+        <div
           onClick={this.onClick}
-          onContextMenu={this.onClick}
-          style={style}
-          src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 2048 1536'%2F%3E"
-          width="2048"
-          height="1536"
-        />
+          onKeyDown={(e) => e.key === 'Enter' && this.onClick(e)}
+          role="button"
+          tabIndex={0}
+        >
+          <img
+            style={style}
+            src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 2048 1536'%2F%3E"
+            width="2048"
+            height="1536"
+            alt=""
+          />
+        </div>
       );
     } else if (this.state.loadState === LoadState.LOADED_FAST_DONE) {
       return (
-        <img
-          style={commonStyle}
-          {...restProps}
-          src={this.props.src}
+        <button
           onClick={this.onClick}
           onContextMenu={this.onClick}
-        />
+          onKeyDown={(e) => e.key === 'Enter' && this.onClick(e)}
+          style={{
+            border: 'none',
+            padding: 0,
+            background: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          <img
+            alt={this.props.alt || ''}
+            style={commonStyle}
+            {...restProps}
+            src={this.props.src}
+          />
+        </button>
       );
     } else if (this.state.loadState === LoadState.LOADED_SLOW_TRANSITIONING) {
       return (
-        <img
-          style={commonStyle}
-          {...restProps}
-          src={this.props.src}
+        <button
           onClick={this.onClick}
           onContextMenu={this.onClick}
-        />
+          onKeyDown={(e) => e.key === 'Enter' && this.onClick(e)}
+          style={{
+            border: 'none',
+            padding: 0,
+            background: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          <img
+            alt={this.props.alt || ''}
+            style={commonStyle}
+            {...restProps}
+            src={this.props.src}
+          />
+        </button>
       );
     } else if (this.state.loadState === LoadState.LOADED_SLOW_DONE) {
       return (
-        <img
-          style={commonStyle}
-          {...restProps}
-          src={this.props.src}
+        <button
           onClick={this.onClick}
           onContextMenu={this.onClick}
-        />
+          onKeyDown={(e) => e.key === 'Enter' && this.onClick(e)}
+          style={{
+            border: 'none',
+            padding: 0,
+            background: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          <img
+            alt={this.props.alt || ''}
+            style={commonStyle}
+            {...restProps}
+            src={this.props.src}
+          />
+        </button>
       );
     } else {
       return <div>Got unexpected load state: {this.state.loadState}</div>;
