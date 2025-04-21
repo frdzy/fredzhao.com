@@ -9,7 +9,7 @@ Recently I talked to other software engineers looking to build some simple apps,
 RedwoodJS as a simple starting point (based on [this earlier post](/app-building-in-2023-2024)).
 
 As I was sending it to people who may have never written production JavaScript, I realized that
-there were quite a few decisions to make and understand... many of which I didn't *really*
+there were quite a few decisions to make and understand... many of which I didn't _really_
 understand myself either! And that's despite working in JavaScript at Facebook and Airtable over my
 career -- the last 4+ quite deeply, since Airtable is on a [fullstack JavaScript
 codebase](https://medium.com/airtable-eng/612c008baf5c).
@@ -34,30 +34,30 @@ you are starting a new greenfield project, you'll have more control on the decis
 join an existing one, it's usually more realistic to go with a pre-existing decision and move on,
 but you'll still benefit from understanding its context.
 
-(For example, RedwoodJS made *some* similar decisions, but many different ones, just due to its
+(For example, RedwoodJS made _some_ similar decisions, but many different ones, just due to its
 nature as an existing project.)
 
 ## <a id="summary"></a> Summary
 
-| Section/Decision | ⚡️ Recommendation for new projects | 🤷 🤓 Details |
-| --- | --- | --- |
-| **1. Make it work/** | [Go to section](#level-1) |
-| 1.1: Development runtime | `node` at v22 | [Read more](#development-runtime) |
-| 1.2: Package manager | `pnpm` | [Read more](#package-manager) |
-| 1.3: Module type | ES Module | [Read more](#module-type) |
-| 1.4: Backend server | Nothing, or `fastify` | [Read more](#backend-server) |
-| 1.5: Frontend web bundler | `vite` | [Read more](#frontend-web-bundler) |
-| 1.6: Frontend UI | `react` at v18.3 | [Read more](#frontend-ui) |
-| **2. Make it right/** | [Go to section](#level-2) |
-| 2.1: Typing and TypeScript | Yes, use TypeScript | [Read more](#typing-typescript) |
-| 2.2: Target version | `es2022` | [Read more](#target-version) |
-| 2.3: Linting | `typescript-eslint` | [Read more](#linting) |
-| **3. Make it fast/** | [Go to section](#level-3) |
-| 3.1: Formatting | `prettier` | [Read more](#formatting) |
-| 3.2: UI Styling | TailwindCSS and Flowbite | [Readmore](#ui-styling) |
-| 3.3: Client \<-> server protocol | GraphQL | [Read more](#client-server-protocol) |
-| 3.4: Database ORM | `prisma` | [Read more](#database-orm) |
-| 3.5: Testing framework | Jest and Storybook | [Read more](#testing-framework) |
+| Section/Decision                 | ⚡️ Recommendation for new projects | 🤷 🤓 Details                        |
+| -------------------------------- | ----------------------------------- | ------------------------------------ |
+| **1. Make it work/**             | [Go to section](#level-1)           |
+| 1.1: Development runtime         | `node` at v22                       | [Read more](#development-runtime)    |
+| 1.2: Package manager             | `pnpm`                              | [Read more](#package-manager)        |
+| 1.3: Module type                 | ES Module                           | [Read more](#module-type)            |
+| 1.4: Backend server              | Nothing, or `fastify`               | [Read more](#backend-server)         |
+| 1.5: Frontend web bundler        | `vite`                              | [Read more](#frontend-web-bundler)   |
+| 1.6: Frontend UI                 | `react` at v18.3                    | [Read more](#frontend-ui)            |
+| **2. Make it right/**            | [Go to section](#level-2)           |
+| 2.1: Typing and TypeScript       | Yes, use TypeScript                 | [Read more](#typing-typescript)      |
+| 2.2: Target version              | `es2022`                            | [Read more](#target-version)         |
+| 2.3: Linting                     | `typescript-eslint`                 | [Read more](#linting)                |
+| **3. Make it fast/**             | [Go to section](#level-3)           |
+| 3.1: Formatting                  | `prettier`                          | [Read more](#formatting)             |
+| 3.2: UI Styling                  | TailwindCSS and Flowbite            | [Readmore](#ui-styling)              |
+| 3.3: Client \<-> server protocol | GraphQL                             | [Read more](#client-server-protocol) |
+| 3.4: Database ORM                | `prisma`                            | [Read more](#database-orm)           |
+| 3.5: Testing framework           | Jest and Storybook                  | [Read more](#testing-framework)      |
 
 ### <a name="editor"></a>Decision 0.1: Editor
 
@@ -101,7 +101,7 @@ $ nvm use --save 22
 **🤔 Why does it matter? What alternatives are there?**
 
 I do rely on an assumption that we are either happily or begrudgingly choosing JS. Without that
-assumption, language *choice* for the backend is worth a post itself, and something I'll admit to
+assumption, language _choice_ for the backend is worth a post itself, and something I'll admit to
 not have tried to fully understand yet.
 
 While having "one" language (ignoring the "target versions" decision in [a bit](#target-version)!)
@@ -169,12 +169,13 @@ install` will record the package manager and version to help further lock in a r
 
 There are two sub-decision here:
 
-* Type of the module for my own project, as defined by a Node project's `package.json`
-* Type of the module I want to use/import
+- Type of the module for my own project, as defined by a Node project's `package.json`
+- Type of the module I want to use/import
 
 **⚡️ What's a simple recommendation on a new greenfield project today?**
 
 **ES Module** for own project, by updating `package.json`:
+
 ```json
 {
   "name": "...",
@@ -197,7 +198,7 @@ direction of the future, and can also easily import CommonJS modules.
 The reverse for importing was not true for a while: CommonJS projects could not easily reuse ES
 Modules. And today, many packages publish as ES Modules only, with many of them linking to [this
 disclaimer](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). But there seems
-to be some good news: if you *have* to use CommonJS as the module system for your project, you may
+to be some good news: if you _have_ to use CommonJS as the module system for your project, you may
 be able to take advantage of [a relatively recent feature in node v22 by Joyee
 Cheung](https://joyeecheung.github.io/blog/2024/03/18/require-esm-in-node-js/)
 to use them as well.
@@ -206,7 +207,7 @@ to use them as well.
 
 **🤷 What's the reason this decision exists?**
 
-When someone navigates to your web application, their request needs to be served by *something*.
+When someone navigates to your web application, their request needs to be served by _something_.
 
 **⚡️ What's a simple recommendation on a new greenfield project today?**
 
@@ -259,8 +260,12 @@ Add two files, `index.html` and `hello.js`:
 
 ```html
 <html>
-  <head><script src="hello.js"></script></head>
-  <body>World!</body>
+  <head>
+    <script src="hello.js"></script>
+  </head>
+  <body>
+    World!
+  </body>
 </html>
 ```
 
@@ -295,7 +300,7 @@ The choice for `vite` is due to its speed and plugin system. I've also seen othe
 
 Frontend development was once done with very separate layers over HTML and JavaScript, with the
 latter only directly able to do very imperative operations to the Document Object Model (DOM).
-Today there are lots of options to help you build out the UI very quickly, so we don't need to 
+Today there are lots of options to help you build out the UI very quickly, so we don't need to
 resort to those imperative operations.
 
 **⚡️ What's a simple recommendation on a new greenfield project today?**
@@ -380,6 +385,7 @@ affect the features we can use on both the server and the browsers that will run
 **⚡️ What's a simple recommendation on a new greenfield project today?**
 
 Update `tsconfig.json`:
+
 ```json
 {
   ...
@@ -398,18 +404,19 @@ JS's language specification is abbreviated ES for ECMAScript, whose [namesake
 Wikipedia article](https://en.wikipedia.org/wiki/ECMAScript) elaborates on the
 history. To over-simplify a bit, we can think of these as synonymous for the
 purpose of the rest of this post:
-* JS
-* JavaScript
-* ES
-* ECMAScript
 
-For a language like Python, it's *both a language and an implementation*:
-python.org defines the language specification *and* provides a default
+- JS
+- JavaScript
+- ES
+- ECMAScript
+
+For a language like Python, it's _both a language and an implementation_:
+python.org defines the language specification _and_ provides a default
 implementation CPython, elaborated in [this Reddit
 thread](https://www.reddit.com/r/learnpython/comments/1czzg57/understanding_what_cpython_actually_is_has/).
 That allows for a more straightforward standardization process.
 
-In contrast, JS is *just* a language standard, and there's no prescriptive
+In contrast, JS is _just_ a language standard, and there's no prescriptive
 implementation when you (or your users) open a browser or fire up a backend
 service. But over time, it inevitably had to evolve to fill in various gaps,
 like how to handle async processing (callbacks -> promises -> async functions)
@@ -419,9 +426,9 @@ Put another way, JS has had a distributed evolution, from different engines
 implementing a language specification standard, that happened simultaneously
 with the evolution of that standard itself.
 
-* Runtime engines include `JavaScriptCore, SpiderMonkey, V8`, each of which
+- Runtime engines include `JavaScriptCore, SpiderMonkey, V8`, each of which
   are used in some browser frontends and server backends
-* The language specification has evolved as part of a committee called
+- The language specification has evolved as part of a committee called
   [TC39](https://tc39.es/). In theory, anyone can make recommendations and
   proposals to the committee; someone I knew from college added
   [Array.prototype.includes](https://github.com/tc39/proposal-Array.prototype.includes)!
@@ -602,7 +609,7 @@ is the most widely used and has the most resources available.
 ## Conclusion
 
 This started as an effort to make sure that I'm not too afraid to ask "why?" in an ecosystem that I
-*should have* understood already.
+_should have_ understood already.
 
 ![knowyourmeme image: "Too Afraid to Ask" Andy](./afraid-to-ask-andy.png)
 
@@ -614,12 +621,12 @@ Overall, JS in 2025 feels like a "glorious and schizophrenic chaos". This is mea
 praise nor critique for the language, but more a reflection of how JS has evolved in a distributed
 way over the years. This has created some tradeoffs and complexities.
 
-* The "Glorious": JS can run everywhere! Many other languages can be transpiled to run in browsers,
+- The "Glorious": JS can run everywhere! Many other languages can be transpiled to run in browsers,
   but JS runs natively. So it can feel glorious to build an entire app using the same language
-* "Schizophrenic" is an important reminder that working with **fullstack** JS means writing in two
+- "Schizophrenic" is an important reminder that working with **fullstack** JS means writing in two
   languages, one for the frontend and one for the backend. They just happen to have the same file
   extensions and use the same syntax!
-* Finally, "Chaos" reflects the various configurations and decisions that arise from its rapid
+- Finally, "Chaos" reflects the various configurations and decisions that arise from its rapid
   development over time. What feels like good recommendations today may very much become outdated by
   2026
 
@@ -637,5 +644,5 @@ earlier draft and giving feedback.
 Many articles I used for reference have already been linked above. If you enjoyed this post, please
 also check out some of the inspirations that helped me write it!
 
-* 2024.12: [Node.js 2025 Guide](https://medium.com/@gabrieldrouin/node-js-2025-guide-how-to-setup-express-js-with-typescript-eslint-and-prettier-b342cd21c30d)
-* 2024.12: [How to run TypeScript in 2025](https://akoskm.com/how-to-run-typescript-2025/)
+- 2024.12: [Node.js 2025 Guide](https://medium.com/@gabrieldrouin/node-js-2025-guide-how-to-setup-express-js-with-typescript-eslint-and-prettier-b342cd21c30d)
+- 2024.12: [How to run TypeScript in 2025](https://akoskm.com/how-to-run-typescript-2025/)

@@ -3,7 +3,7 @@ import React from 'react';
 import Airtable from './airtable.inline.svg';
 import Facebook from './facebook.inline.svg';
 
-function Inner({company}) {
+function Inner({ company }) {
   switch (company) {
     case 'airtable':
       return <Airtable />;
@@ -15,12 +15,12 @@ function Inner({company}) {
 }
 
 const STYLE = {
-  display: 'inline-block', 
-  width: 32, 
-  height: 32, 
+  display: 'inline-block',
+  width: 32,
+  height: 32,
   verticalAlign: 'text-bottom',
 };
-export function Icon({company}) {
+export function Icon({ company }) {
   return (
     <div style={STYLE}>
       <Inner company={company} />

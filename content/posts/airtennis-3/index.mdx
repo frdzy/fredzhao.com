@@ -34,30 +34,32 @@ Find the preview button at the top called "Open form" and click it to see the ac
 scroll down to the form field called "Availability / Reservation", the "Add" button should now show
 the Reservation we just created.
 
-<h3 id="step-4">Step 4: Create email Automations for form submission and pre-match reminder</h3>
+<h3 id="step-4">
+  Step 4: Create email Automations for form submission and pre-match reminder
+</h3>
 
 Finally, we can add some Automations to finish this setup! Click on the tab at the top of the page
 called "Automations" to get started. Here are the two main ones to set up:
 
 **Notify me on form submissions**
 
-* Trigger: When a form is submitted: select the table "Scheduling" and pick [the form from step 3]
-* Actions:
-    * Conditional logic (from the "Advanced logic" section): If Reservation length > 0
-        * Action: Send an email to use the "Reservation" entry
-    * Otherwise
-        * Action: Send an email to use the "Manual Time" entry from the form
+- Trigger: When a form is submitted: select the table "Scheduling" and pick [the form from step 3]
+- Actions:
+  - Conditional logic (from the "Advanced logic" section): If Reservation length > 0
+    - Action: Send an email to use the "Reservation" entry
+  - Otherwise
+    - Action: Send an email to use the "Manual Time" entry from the form
 
 **Reminder emails**
 
-* Trigger: At a scheduled time: Every 1 day at 9am local time
-* Actions:
-    * Action: Find records from the table "Scheduling" using the Conditions of...
-        * "Status" is any of Confirmed or Tentative
-        * and "Player Email" is not empty
-        * and "Date" is tomorrow GMT
-    * Repeat for each in [List of records from the previous action]
-        * Action: Send email to use the "Player Email" field, and your own email in the "Reply to" field
+- Trigger: At a scheduled time: Every 1 day at 9am local time
+- Actions:
+  - Action: Find records from the table "Scheduling" using the Conditions of...
+    - "Status" is any of Confirmed or Tentative
+    - and "Player Email" is not empty
+    - and "Date" is tomorrow GMT
+  - Repeat for each in [List of records from the previous action]
+    - Action: Send email to use the "Player Email" field, and your own email in the "Reply to" field
 
 <h3 id="step-5">Step 5: Try it out!</h3>
 

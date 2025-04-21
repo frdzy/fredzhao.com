@@ -17,9 +17,11 @@ export default class ImageLoader extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.nextSrcs.some(
-      src => !this.state.loadedSources.hasOwnProperty(src)
-    )) {
+    if (
+      nextProps.nextSrcs.some(
+        (src) => !this.state.loadedSources.hasOwnProperty(src)
+      )
+    ) {
       this.prefetchNextImage();
     }
 
@@ -119,15 +121,15 @@ export default class ImageLoader extends React.Component {
 
   prefetchNextImage() {
     if (this.props.nextSrcs) {
-      this.props.nextSrcs.forEach(src => {
+      this.props.nextSrcs.forEach((src) => {
         if (!this.state.loadedSources[src]) {
           const nextImageLoader = new Image();
           nextImageLoader.onload = () => {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
               loadedSources: {
                 ...prevState.loadedSources,
-                [src]: true
-              }
+                [src]: true,
+              },
             }));
           };
           nextImageLoader.src = src;
