@@ -94,7 +94,7 @@ const renderMarkdownText = (text) => {
 
 const SUMMARY = `
 - Experienced "one to a thousand" engineering leader and tryhard dogfooder
-- Expertise in server-side abstractions, [competence](/how-i-wish-i-got-introduced-to-js-development-in-2025/) in fullstack development
+- Expertise in server-side abstractions, [competence](https://fredzhao.com/how-i-wish-i-got-introduced-to-js-development-in-2025/) in fullstack development
 - Passionate about improving existing systems, cross-team collaboration, and building knowledge repositories
 `;
 
