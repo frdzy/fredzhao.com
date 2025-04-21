@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Page,
   Text,
@@ -34,10 +34,14 @@ const styles = StyleSheet.create({
 });
 
 const RoleHeader = ({ text }) => {
-  const [role, company, location, period] = text.split('|').map((s) => s.trim());
+  const [role, company, location, period] = text
+    .split('|')
+    .map((s) => s.trim());
   return (
     <View style={styles.roleContainer}>
-      <Text style={styles.roleText}>{`${role} - ${company} @ ${location}`}</Text>
+      <Text
+        style={styles.roleText}
+      >{`${role} - ${company} @ ${location}`}</Text>
       <Text style={styles.roleText}>{period}</Text>
     </View>
   );
@@ -46,7 +50,7 @@ const RoleHeader = ({ text }) => {
 const renderMarkdownText = (text) => {
   const builder = [];
   if (text.startsWith('  ')) {
-    builder.push(<Text style={styles.entry}>  </Text>);
+    builder.push(<Text style={styles.entry}> </Text>);
     text = text.slice(2);
   }
   if (text.startsWith('- ') || text.startsWith('* ')) {
@@ -70,12 +74,18 @@ const renderMarkdownText = (text) => {
       builder.push(
         <Text style={styles.entry} key={i}>
           {linkMatch[1]}
-          <Link style={styles.link} src={linkMatch[3]}>{linkMatch[2]}</Link>
+          <Link style={styles.link} src={linkMatch[3]}>
+            {linkMatch[2]}
+          </Link>
           {linkMatch[4]}
         </Text>
       );
     } else {
-      builder.push(<Text style={styles.entry} key={i}>{part}</Text>);
+      builder.push(
+        <Text style={styles.entry} key={i}>
+          {part}
+        </Text>
+      );
     }
   });
 
@@ -150,13 +160,23 @@ export default function ResumePDF() {
   const education = renderLines(EDUCATION);
   const volunteering = renderLines(VOLUNTEERING);
 
+  // Work around gatsby build's static HTML error
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <PDFViewer style={{ width: '100%', height: '100vh' }}>
       <Document>
         <Page size="A4" style={styles.page}>
           <Text style={styles.header}>Fred Y. Zhao</Text>
           <Text style={styles.contact}>
-            This page best viewed on <Link src="https://fredzhao.com/about/resume">my website</Link>
+            This page best viewed on{' '}
+            <Link src="https://fredzhao.com/about/resume">my website</Link>
           </Text>
           <View key="summary" style={styles.section}>
             <Text style={styles.sectionTitle}>Summary</Text>
