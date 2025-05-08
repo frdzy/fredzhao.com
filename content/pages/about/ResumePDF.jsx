@@ -123,9 +123,9 @@ const HIGHLIGHTED_AIRTABLE = `
 
 const HIGHLIGHTED_FACEBOOK = `
 **Recruiting Products - Discovery (Jul 2019 - Sep 2020)**
-  * Product engineering on internal recruiting source tool
-  * Surfaced semantic search over candidate resume data to match with positions relevant to recruiting partners
-  * Adapted data source to improve matching based on current events (industry news, layoff data)
+  * As a product engineer, collaborated with ML engineering team to improve relevance and efficiency for end users
+  * Surfaced semantic search over candidate resumes to match with positions relevant to recruiting partners
+  * Added data integration from industry news and layoff data to enable **timely outreach to newly available talent**
 
 **Productivity Tools (Aug 2017 - Jul 2019)**
   * **Built "Inbox Zero" features** and notification management system that reduced company-wide notification noise
