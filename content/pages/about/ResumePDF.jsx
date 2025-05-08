@@ -106,8 +106,9 @@ const HIGHLIGHTED_AIRTABLE = `
 
 **Large Deployments & Data Governance (Sep 2023 - Present)**
   * Led team of 7-12 engineers to close product and system gaps for administering users at 10x scale (10k to 100k)
-  * **Enabled multimillion-dollar ARR enterprise customers** to adopt wall-to-wall deployments
-  * Joined customer calls to incorporate feedback and inform project prioritization
+  * Enabled multimillion-dollar ARR enterprise customers to adopt wall-to-wall deployments
+  * Planned and shipped product features enabling **$xxxK+ ACV worth of competitor takeout**
+  * Joined customer calls to inform project prioritization around enterprise-grade security and governance
   * Significantly reduced engineering support time while maintaining quality, via docs and support team collab
   * Facilitated eng/product/design discussions to **empower engineers and manage teamwide decision fatigue**
 
@@ -121,6 +122,11 @@ const HIGHLIGHTED_AIRTABLE = `
 `;
 
 const HIGHLIGHTED_FACEBOOK = `
+**Recruiting Products - Discovery (Jul 2019 - Sep 2020)**
+  * Product engineering on internal recruiting source tool
+  * Surfaced semantic search over candidate resume data to match with positions relevant to recruiting partners
+  * Adapted data source to improve matching based on current events (industry news, layoff data)
+
 **Productivity Tools (Aug 2017 - Jul 2019)**
   * **Built "Inbox Zero" features** and notification management system that reduced company-wide notification noise
   * Developed project management features for internal task management tool, "Tasks"
